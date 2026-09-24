@@ -1,0 +1,58 @@
+Attendance Tracker - Initial Idea
+=================================
+
+Purpose
+-------
+An easy-to-use university attendance tracker for recording student attendance
+by subject and teacher, then showing useful summaries before attendance becomes
+a problem.
+
+Main Users
+----------
+- Teacher: records attendance for each class and reviews class statistics.
+- Student: checks their own attendance and sees which subjects need attention.
+- Admin: manages students, teachers, subjects, and class groups.
+
+Core Workflow
+-------------
+1. Create a class or course with a subject, teacher, semester, and schedule.
+2. Add the students enrolled in that class.
+3. Open the class for a specific date.
+4. Mark each student as Present, Absent, Late, or Excused.
+5. Save the session and automatically update attendance percentages.
+6. Review the history or export a report when needed.
+
+Important Screens
+-----------------
+- Dashboard: today's classes, recent sessions, and students at risk.
+- Students: searchable list with each student's overall attendance.
+- Subjects: subjects grouped by teacher and semester.
+- Attendance session: fast attendance marking with a clear save action.
+- Student detail: attendance history, percentage, absences, and lateness.
+- Reports: filter by student, subject, teacher, date range, or status.
+
+Useful Rules
+------------
+- Attendance percentage = attended sessions / total sessions, with Late counted
+  as attended unless the administrator changes the rule.
+- Excused absences should be visible separately from unexcused absences.
+- A teacher can edit a session, but changes should keep an edit history.
+- Duplicate attendance sessions for the same class and date should be blocked
+  or require confirmation.
+- The app should warn students when their attendance drops below a threshold,
+  such as 75%.
+
+Nice Additions Later
+--------------------
+- CSV or PDF report export.
+- Import students from a spreadsheet.
+- QR code check-in for faster attendance.
+- Notifications for low attendance or missed classes.
+- Calendar view for scheduled classes.
+- Role-based login and permissions.
+- Offline support with sync when the connection returns.
+
+Initial Goal
+------------
+Build the smallest useful version first: manage students, teachers, and
+subjects; record daily attendance; and show accurate attendance percentages.
