@@ -1,44 +1,42 @@
 Attendance Tracker - Initial Idea
 =================================
 
+Initial Goal
+------------
+Build the smallest useful version first: manage students, teachers, and
+subjects; record daily attendance; and show accurate attendance percentages.
+
+i wanna make this attendance tracker just for make
+it should have the semester 5 all data all classes teachers everything
+i wanna make a button so i can choose the teacher and then i can like press present or absent if i took class or No 
+i wanna have a percentage at the end after choosing the option to see how much is my attendance till now
+i wanna have the credit hours, the amount of classes i have to take
+i want to have cool like small jokes with my classes or like pop ups when i press present or absent on the class.
+i wanna like have some cool effects
+i want to have a web app where it automaticall like chooses the date for the class monday this this this, tuesday this this this
+i wanna have a page where i can like log assignments for a particular teacher or something i use a copy for that but i wanna have this in the app too
+i want to have a option to add like make up classes on a particular date and have a list of all the teachers and everything.
+
+
 Purpose
 -------
 An easy-to-use university attendance tracker for recording student attendance
 by subject and teacher, then showing useful summaries before attendance becomes
 a problem.
 
-Main Users
-----------
-- Teacher: records attendance for each class and reviews class statistics.
-- Student: checks their own attendance and sees which subjects need attention.
-- Admin: manages students, teachers, subjects, and class groups.
-
-Core Workflow
--------------
-1. Create a class or course with a subject, teacher, semester, and schedule.
-2. Add the students enrolled in that class.
-3. Open the class for a specific date.
-4. Mark each student as Present, Absent, Late, or Excused.
-5. Save the session and automatically update attendance percentages.
-6. Review the history or export a report when needed.
 
 Important Screens
 -----------------
-- Dashboard: today's classes, recent sessions, and students at risk.
-- Students: searchable list with each student's overall attendance.
+- Dashboard: today's classes
 - Subjects: subjects grouped by teacher and semester.
 - Attendance session: fast attendance marking with a clear save action.
-- Student detail: attendance history, percentage, absences, and lateness.
-- Reports: filter by student, subject, teacher, date range, or status.
+- Student detail: attendance history, percentage, absences.
 
 Useful Rules
 ------------
 - Attendance percentage = attended sessions / total sessions, with Late counted
   as attended unless the administrator changes the rule.
 - Excused absences should be visible separately from unexcused absences.
-- A teacher can edit a session, but changes should keep an edit history.
-- Duplicate attendance sessions for the same class and date should be blocked
-  or require confirmation.
 - The app should warn students when their attendance drops below a threshold,
   such as 75%.
 
@@ -52,7 +50,3 @@ Nice Additions Later
 - Role-based login and permissions.
 - Offline support with sync when the connection returns.
 
-Initial Goal
-------------
-Build the smallest useful version first: manage students, teachers, and
-subjects; record daily attendance; and show accurate attendance percentages.
