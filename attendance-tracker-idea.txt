@@ -16,7 +16,8 @@ i wanna like have some cool effects
 i want to have a web app where it automaticall like chooses the date for the class monday this this this, tuesday this this this
 i wanna have a page where i can like log assignments for a particular teacher or something i use a copy for that but i wanna have this in the app too
 i want to have a option to add like make up classes on a particular date and have a list of all the teachers and everything.
-
+it should go along with mobile view because ill be opening it in phone mostly
+it should be like if i want to like switch platform from web to like a  flutter app it should be easy to switch
 Purpose
 -------
 An easy-to-use university attendance tracker for recording student attendance
