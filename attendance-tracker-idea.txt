@@ -17,13 +17,11 @@ i want to have a web app where it automaticall like chooses the date for the cla
 i wanna have a page where i can like log assignments for a particular teacher or something i use a copy for that but i wanna have this in the app too
 i want to have a option to add like make up classes on a particular date and have a list of all the teachers and everything.
 
-
 Purpose
 -------
 An easy-to-use university attendance tracker for recording student attendance
 by subject and teacher, then showing useful summaries before attendance becomes
 a problem.
-
 
 Important Screens
 -----------------
@@ -49,4 +47,3 @@ Nice Additions Later
 - Calendar view for scheduled classes.
 - Role-based login and permissions.
 - Offline support with sync when the connection returns.
-
