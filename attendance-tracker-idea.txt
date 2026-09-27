@@ -19,6 +19,7 @@ i want to have a option to add like make up classes on a particular date and hav
 it should go along with mobile view because ill be opening it in phone mostly
 it should be like if i want to like switch platform from web to like a  flutter app it should be easy to switch
 it should have everything online if a database is needed it should be all online nothing local
+It should have a option where i can add like assignments with a specific subject so i know i have to do this
 
 Purpose
 -------
