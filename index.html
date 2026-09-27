@@ -3,77 +3,60 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#f7f3ec" />
-    <title>Roll Call | Semester 5</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <title>Attendance Tracker - Initial Idea</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="app-shell">
-      <aside class="sidebar">
-        <a class="brand" href="#top" aria-label="Roll Call home">
-          <span class="brand-mark">RC</span>
-          <span>roll call<span class="brand-dot">.</span></span>
-        </a>
-        <nav class="nav-list" aria-label="Main navigation">
-          <a class="nav-item active" href="#today"><span class="nav-icon">◴</span>Today</a>
-          <a class="nav-item" href="#subjects"><span class="nav-icon">▦</span>Subjects</a>
-          <a class="nav-item" href="#assignments"><span class="nav-icon">☷</span>Assignments</a>
-          <a class="nav-item" href="#calendar"><span class="nav-icon">□</span>Calendar</a>
-        </nav>
-        <div class="semester-card">
-          <span class="eyebrow">Current term</span>
-          <strong>Semester 05</strong>
-          <span class="semester-date">Sep 2026 — Jan 2027</span>
-          <div class="term-line"><span></span></div>
-          <small>14 weeks remaining</small>
-        </div>
-        <div class="sidebar-footer"><span class="status-dot"></span> All changes saved<br /><span class="footer-muted">Ready for class</span></div>
-      </aside>
+    <main>
+      <h1>Attendance Tracker - Initial Idea</h1>
+      <hr />
 
-      <main class="main-content" id="top">
-        <header class="topbar">
-          <div class="mobile-brand"><span class="brand-mark">RC</span><span>roll call<span class="brand-dot">.</span></span></div>
-          <div class="top-actions"><button class="icon-button" aria-label="Notifications">♧<span class="notification-dot"></span></button><button class="avatar" aria-label="Open profile">MA</button></div>
-        </header>
+      <h2>Initial Goal</h2>
+      <p>Build the smallest useful version first: manage students, teachers, and subjects; record daily attendance; and show accurate attendance percentages.</p>
 
-        <section class="welcome-row">
-          <div><p class="eyebrow accent">Monday, September 28, 2026</p><h1>Good morning, Maaz<span class="wave">✦</span></h1><p class="subheading">Keep it above 75%. You’re doing better than last week.</p></div>
-          <button class="primary-button" id="addClassButton"><span>＋</span> Add makeup class</button>
-        </section>
+      <p>i wanna make this attendance tracker just for make<br />
+      it should have the semester 5 all data all classes teachers everything<br />
+      i wanna make a button so i can choose the teacher and then i can like press present or absent if i took class or No<br />
+      i wanna have a percentage at the end after choosing the option to see how much is my attendance till now<br />
+      i wanna have the credit hours, the amount of classes i have to take<br />
+      i want to have cool like small jokes with my classes or like pop ups when i press present or absent on the class.<br />
+      i wanna like have some cool effects<br />
+      i want to have a web app where it automaticall like chooses the date for the class monday this this this, tuesday this this this<br />
+      i wanna have a page where i can like log assignments for a particular teacher or something i use a copy for that but i wanna have this in the app too<br />
+      i want to have a option to add like make up classes on a particular date and have a list of all the teachers and everything.<br />
+      it should go along with mobile view because ill be opening it in phone mostly<br />
+      it should be like if i want to like switch platform from web to like a flutter app it should be easy to switch<br />
+      it should have everything online if a database is needed it should be all online nothing local<br />
+      It should have a option where i can add like assignments with a specific subject so i know i have to do this</p>
 
-        <section class="stats-grid" aria-label="Attendance overview">
-          <article class="stat-card attendance-stat"><div class="stat-top"><span class="eyebrow">Overall attendance</span><span class="trend">↗ 2.4%</span></div><div class="stat-value">82<span>%</span></div><div class="progress-track"><span style="width:82%"></span><i></i></div><div class="stat-note">48 attended <span>/</span> 58 total classes</div></article>
-          <article class="stat-card"><span class="eyebrow">Classes this week</span><div class="stat-value">06</div><div class="stat-note">2 classes left today</div><span class="stat-spark">▁▃▂▅▃▆▅</span></article>
-          <article class="stat-card warning-stat"><span class="eyebrow">Needs attention</span><div class="stat-value">01</div><div class="stat-note">Subject below 75%</div><span class="warning-label">Database Systems</span></article>
-        </section>
+      <h2>Purpose</h2>
+      <p>An easy-to-use university attendance tracker for recording student attendance by subject and teacher, then showing useful summaries before attendance becomes a problem.</p>
 
-        <div class="content-grid">
-          <section class="today-panel" id="today">
-            <div class="section-heading"><div><p class="eyebrow accent">Your schedule</p><h2>Today’s classes</h2></div><button class="text-button" id="weekButton">View week <span>→</span></button></div>
-            <div class="class-list" id="classList"></div>
-          </section>
+      <h2>Important Screens</h2>
+      <ul>
+        <li>Dashboard: today's classes</li>
+        <li>Subjects: subjects grouped by teacher and semester.</li>
+        <li>Attendance session: fast attendance marking with a clear save action.</li>
+        <li>Student detail: attendance history, percentage, absences.</li>
+      </ul>
 
-          <aside class="right-column">
-            <section class="assignments-panel" id="assignments">
-              <div class="section-heading"><div><p class="eyebrow accent">Don’t forget</p><h2>Assignments</h2></div><button class="round-button" id="addAssignmentButton" aria-label="Add assignment">＋</button></div>
-              <div id="assignmentList" class="assignment-list"></div>
-              <button class="outline-button" id="viewAssignmentsButton">View all assignments <span>→</span></button>
-            </section>
-            <section class="quote-card"><span class="quote-mark">“</span><p id="quoteText">Attendance is temporary. The group project screenshots are forever.</p><span class="quote-label">A little class wisdom</span><button class="refresh-quote" id="refreshQuote" aria-label="Get another quote">↻</button></section>
-          </aside>
-        </div>
+      <h2>Useful Rules</h2>
+      <ul>
+        <li>Attendance percentage = attended sessions / total sessions, with Late counted as attended unless the administrator changes the rule.</li>
+        <li>Excused absences should be visible separately from unexcused absences.</li>
+        <li>The app should warn students when their attendance drops below a threshold, such as 75%.</li>
+      </ul>
 
-        <section class="subjects-section" id="subjects">
-          <div class="section-heading"><div><p class="eyebrow accent">Semester 05 overview</p><h2>All subjects</h2></div><button class="text-button" id="manageSubjectsButton">Manage subjects <span>→</span></button></div>
-          <div class="subject-grid" id="subjectGrid"></div>
-        </section>
-        <footer class="app-footer">Roll Call <span>·</span> Semester 05 <span>·</span> Built for the days you almost forget.</footer>
-      </main>
-    </div>
-    <div class="toast" id="toast" role="status"></div>
-    <script src="app.js"></script>
+      <h2>Nice Additions Later</h2>
+      <ul>
+        <li>CSV or PDF report export.</li>
+        <li>Import students from a spreadsheet.</li>
+        <li>QR code check-in for faster attendance.</li>
+        <li>Notifications for low attendance or missed classes.</li>
+        <li>Calendar view for scheduled classes.</li>
+        <li>Role-based login and permissions.</li>
+        <li>Offline support with sync when the connection returns.</li>
+      </ul>
+    </main>
   </body>
 </html>
