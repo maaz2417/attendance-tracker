@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f7f3ec" />
+    <title>Roll Call | Semester 5</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="#top" aria-label="Roll Call home">
+          <span class="brand-mark">RC</span>
+          <span>roll call<span class="brand-dot">.</span></span>
+        </a>
+        <nav class="nav-list" aria-label="Main navigation">
+          <a class="nav-item active" href="#today"><span class="nav-icon">◴</span>Today</a>
+          <a class="nav-item" href="#subjects"><span class="nav-icon">▦</span>Subjects</a>
+          <a class="nav-item" href="#assignments"><span class="nav-icon">☷</span>Assignments</a>
+          <a class="nav-item" href="#calendar"><span class="nav-icon">□</span>Calendar</a>
+        </nav>
+        <div class="semester-card">
+          <span class="eyebrow">Current term</span>
+          <strong>Semester 05</strong>
+          <span class="semester-date">Sep 2026 — Jan 2027</span>
+          <div class="term-line"><span></span></div>
+          <small>14 weeks remaining</small>
+        </div>
+        <div class="sidebar-footer"><span class="status-dot"></span> All changes saved<br /><span class="footer-muted">Ready for class</span></div>
+      </aside>
+
+      <main class="main-content" id="top">
+        <header class="topbar">
+          <div class="mobile-brand"><span class="brand-mark">RC</span><span>roll call<span class="brand-dot">.</span></span></div>
+          <div class="top-actions"><button class="icon-button" aria-label="Notifications">♧<span class="notification-dot"></span></button><button class="avatar" aria-label="Open profile">MA</button></div>
+        </header>
+
+        <section class="welcome-row">
+          <div><p class="eyebrow accent">Monday, September 28, 2026</p><h1>Good morning, Maaz<span class="wave">✦</span></h1><p class="subheading">Keep it above 75%. You’re doing better than last week.</p></div>
+          <button class="primary-button" id="addClassButton"><span>＋</span> Add makeup class</button>
+        </section>
+
+        <section class="stats-grid" aria-label="Attendance overview">
+          <article class="stat-card attendance-stat"><div class="stat-top"><span class="eyebrow">Overall attendance</span><span class="trend">↗ 2.4%</span></div><div class="stat-value">82<span>%</span></div><div class="progress-track"><span style="width:82%"></span><i></i></div><div class="stat-note">48 attended <span>/</span> 58 total classes</div></article>
+          <article class="stat-card"><span class="eyebrow">Classes this week</span><div class="stat-value">06</div><div class="stat-note">2 classes left today</div><span class="stat-spark">▁▃▂▅▃▆▅</span></article>
+          <article class="stat-card warning-stat"><span class="eyebrow">Needs attention</span><div class="stat-value">01</div><div class="stat-note">Subject below 75%</div><span class="warning-label">Database Systems</span></article>
+        </section>
+
+        <div class="content-grid">
+          <section class="today-panel" id="today">
+            <div class="section-heading"><div><p class="eyebrow accent">Your schedule</p><h2>Today’s classes</h2></div><button class="text-button" id="weekButton">View week <span>→</span></button></div>
+            <div class="class-list" id="classList"></div>
+          </section>
+
+          <aside class="right-column">
+            <section class="assignments-panel" id="assignments">
+              <div class="section-heading"><div><p class="eyebrow accent">Don’t forget</p><h2>Assignments</h2></div><button class="round-button" id="addAssignmentButton" aria-label="Add assignment">＋</button></div>
+              <div id="assignmentList" class="assignment-list"></div>
+              <button class="outline-button" id="viewAssignmentsButton">View all assignments <span>→</span></button>
+            </section>
+            <section class="quote-card"><span class="quote-mark">“</span><p id="quoteText">Attendance is temporary. The group project screenshots are forever.</p><span class="quote-label">A little class wisdom</span><button class="refresh-quote" id="refreshQuote" aria-label="Get another quote">↻</button></section>
+          </aside>
+        </div>
+
+        <section class="subjects-section" id="subjects">
+          <div class="section-heading"><div><p class="eyebrow accent">Semester 05 overview</p><h2>All subjects</h2></div><button class="text-button" id="manageSubjectsButton">Manage subjects <span>→</span></button></div>
+          <div class="subject-grid" id="subjectGrid"></div>
+        </section>
+        <footer class="app-footer">Roll Call <span>·</span> Semester 05 <span>·</span> Built for the days you almost forget.</footer>
+      </main>
+    </div>
+    <div class="toast" id="toast" role="status"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
