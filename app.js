@@ -34,7 +34,7 @@ function setAttendance(teacher, status) {
   teacher.attendance = status;
 }
 function renderTeachers() {
-  teacherGrid.innerHTML = teachers.map(teacher => { const progress = classProgress(teacher); return `<article class="teacher-card"><div class="teacher-top"><div><h4>${teacher.name}</h4><p class="teacher-subject">${teacher.subject}</p></div><span class="teacher-initial">${initials(teacher.name)}</span></div><p class="teacher-room">⌖ ${teacher.room}</p><div class="class-counter" aria-label="Class progress"><div><strong>${progress.done}</strong><span>done</span></div><div><strong>${progress.left}</strong><span>left</span></div><div><strong>${progress.absent}</strong><span>absent</span></div></div><p class="semester-total">${progress.total} total classes · ${teacher.weeklyClasses} per week · week ${CURRENT_WEEK} of ${SEMESTER_WEEKS}</p><div class="teacher-actions"><button class="attendance-button present ${teacher.attendance === 'present' ? 'selected' : ''}" data-attendance="present" data-teacher="${teacher.id}" type="button">✓ Present</button><button class="attendance-button absent ${teacher.attendance === 'absent' ? 'selected' : ''}" data-attendance="absent" data-teacher="${teacher.id}" type="button">× Absent</button><button class="open-button" data-open-teacher="${teacher.id}" type="button">Open teacher</button></div></article>`; }).join('');
+  teacherGrid.innerHTML = teachers.map(teacher => { const progress = classProgress(teacher); return `<article class="teacher-card"><div class="teacher-top"><div><h4>${teacher.name}</h4><p class="teacher-subject">${teacher.subject}</p></div><span class="teacher-initial">${initials(teacher.name)}</span></div><p class="teacher-room">⌖ ${teacher.room}</p><div class="class-counter" aria-label="Class progress"><div><strong>${progress.done}</strong><span>done</span></div><div><strong>${progress.left}</strong><span>left</span></div><div><strong>${progress.absent}</strong><span>absent</span></div></div><p class="semester-total">${progress.total} total classes · ${teacher.weeklyClasses} per week · week ${CURRENT_WEEK} of ${SEMESTER_WEEKS}</p><div class="teacher-actions"><button class="attendance-button present ${teacher.attendance === 'present' ? 'selected' : ''}" data-attendance="present" data-teacher="${teacher.id}" type="button">✓ Present</button><button class="attendance-button absent ${teacher.attendance === 'absent' ? 'selected' : ''}" data-attendance="absent" data-teacher="${teacher.id}" type="button">× Absent</button><button class="open-button" data-open-teacher="${teacher.id}" type="button">Open teacher</button></div><button class="remove-teacher" data-remove-teacher="${teacher.id}" type="button">Remove teacher</button></article>`; }).join('');
   document.querySelector('#teacher-count').textContent = `${teachers.length} teachers`;
 }
 function formatDate(date) { return new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric' }).format(new Date(`${date}T12:00:00`)); }
@@ -58,6 +58,15 @@ teacherGrid.addEventListener('click', event => {
   if (attendanceButton) { const teacher = teachers.find(item => item.id === Number(attendanceButton.dataset.teacher)); setAttendance(teacher, attendanceButton.dataset.attendance); renderTeachers(); showToast(`${teacher.name}: marked ${teacher.attendance}.`); }
   const openButton = event.target.closest('[data-open-teacher]');
   if (openButton) openTeacherDetail(teachers.find(item => item.id === Number(openButton.dataset.openTeacher)));
+  const removeButton = event.target.closest('[data-remove-teacher]');
+  if (removeButton) {
+    const teacher = teachers.find(item => item.id === Number(removeButton.dataset.removeTeacher));
+    if (!teacher || !window.confirm(`Remove ${teacher.name} from your teacher list?`)) return;
+    const index = teachers.indexOf(teacher);
+    teachers.splice(index, 1);
+    renderTeachers();
+    showToast(`${teacher.name} was removed.`);
+  }
 });
 document.querySelectorAll('#detail-present, #detail-absent').forEach(button => button.addEventListener('click', event => {
   const teacher = teachers.find(item => item.name === document.querySelector('#detail-name').textContent);
