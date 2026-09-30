@@ -3,60 +3,37 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Attendance Tracker - Initial Idea</title>
+    <title>Classroom | Attendance Tracker</title>
     <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
   </head>
   <body>
-    <main>
-      <h1>Attendance Tracker - Initial Idea</h1>
-      <hr />
-
-      <h2>Initial Goal</h2>
-      <p>Build the smallest useful version first: manage students, teachers, and subjects; record daily attendance; and show accurate attendance percentages.</p>
-
-      <p>i wanna make this attendance tracker just for make<br />
-      it should have the semester 5 all data all classes teachers everything<br />
-      i wanna make a button so i can choose the teacher and then i can like press present or absent if i took class or No<br />
-      i wanna have a percentage at the end after choosing the option to see how much is my attendance till now<br />
-      i wanna have the credit hours, the amount of classes i have to take<br />
-      i want to have cool like small jokes with my classes or like pop ups when i press present or absent on the class.<br />
-      i wanna like have some cool effects<br />
-      i want to have a web app where it automaticall like chooses the date for the class monday this this this, tuesday this this this<br />
-      i wanna have a page where i can like log assignments for a particular teacher or something i use a copy for that but i wanna have this in the app too<br />
-      i want to have a option to add like make up classes on a particular date and have a list of all the teachers and everything.<br />
-      it should go along with mobile view because ill be opening it in phone mostly<br />
-      it should be like if i want to like switch platform from web to like a flutter app it should be easy to switch<br />
-      it should have everything online if a database is needed it should be all online nothing local<br />
-      It should have a option where i can add like assignments with a specific subject so i know i have to do this</p>
-
-      <h2>Purpose</h2>
-      <p>An easy-to-use university attendance tracker for recording student attendance by subject and teacher, then showing useful summaries before attendance becomes a problem.</p>
-
-      <h2>Important Screens</h2>
-      <ul>
-        <li>Dashboard: today's classes</li>
-        <li>Subjects: subjects grouped by teacher and semester.</li>
-        <li>Attendance session: fast attendance marking with a clear save action.</li>
-        <li>Student detail: attendance history, percentage, absences.</li>
-      </ul>
-
-      <h2>Useful Rules</h2>
-      <ul>
-        <li>Attendance percentage = attended sessions / total sessions, with Late counted as attended unless the administrator changes the rule.</li>
-        <li>Excused absences should be visible separately from unexcused absences.</li>
-        <li>The app should warn students when their attendance drops below a threshold, such as 75%.</li>
-      </ul>
-
-      <h2>Nice Additions Later</h2>
-      <ul>
-        <li>CSV or PDF report export.</li>
-        <li>Import students from a spreadsheet.</li>
-        <li>QR code check-in for faster attendance.</li>
-        <li>Notifications for low attendance or missed classes.</li>
-        <li>Calendar view for scheduled classes.</li>
-        <li>Role-based login and permissions.</li>
-        <li>Offline support with sync when the connection returns.</li>
-      </ul>
+    <main class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="#top" aria-label="Classroom home"><span class="brand-mark">C</span><span>classroom</span></a>
+        <nav class="main-nav" aria-label="Main navigation">
+          <a class="nav-link active" href="#top"><span class="nav-icon">⌂</span>Overview</a>
+          <a class="nav-link" href="#teachers"><span class="nav-icon">◎</span>Teachers</a>
+          <a class="nav-link" href="#tasks"><span class="nav-icon">✓</span>Tasks</a>
+        </nav>
+        <div class="semester-card"><span class="eyebrow">Current semester</span><strong>Semester V</strong><span>Group A · Fall 2026</span></div>
+        <p class="sidebar-note">Your attendance, in one calm place.</p>
+      </aside>
+      <section class="content" id="top">
+        <header class="topbar"><div><span class="eyebrow">Monday, September 30, 2026</span><h1>Good morning, Maaz.</h1></div><button class="avatar" type="button" aria-label="Open profile">M</button></header>
+        <div class="page-heading"><div><span class="eyebrow">Your semester at a glance</span><h2>Keep showing up.</h2></div><button class="quiet-button" id="add-teacher-button" type="button"><span>+</span> Add teacher</button></div>
+        <section class="stats-grid" aria-label="Attendance summary">
+          <article class="stat-card accent-card"><span class="stat-label">Overall attendance</span><strong id="overall-attendance">84%</strong><span class="stat-caption">Across 5 subjects</span></article>
+          <article class="stat-card"><span class="stat-label">Classes this week</span><strong>12</strong><span class="stat-caption">3 classes today</span></article>
+          <article class="stat-card"><span class="stat-label">Tasks due soon</span><strong id="task-count">3</strong><span class="stat-caption">Keep the momentum</span></article>
+        </section>
+        <section class="section-block" id="teachers"><div class="section-heading"><div><span class="eyebrow">Your faculty</span><h3>Teachers & subjects</h3></div><span class="section-count" id="teacher-count">5 teachers</span></div><div class="teacher-grid" id="teacher-grid"></div></section>
+        <section class="section-block tasks-section" id="tasks"><div class="section-heading"><div><span class="eyebrow">Stay on top of it</span><h3>Upcoming tasks</h3></div><button class="text-button" id="add-task-button" type="button">+ Add task</button></div><div class="task-list" id="task-list"></div></section>
+      </section>
     </main>
+    <div class="modal-backdrop" id="teacher-modal" hidden><form class="modal" id="teacher-form"><button class="modal-close" type="button" data-close-modal aria-label="Close">×</button><span class="eyebrow">New faculty member</span><h2>Add a teacher</h2><label>Name<input name="name" required placeholder="e.g. Dr. Nadia Iftikhar" /></label><label>Subject<input name="subject" required placeholder="e.g. Fundamentals of Accounting" /></label><label>Room or note<input name="room" placeholder="e.g. 1st Floor · Class LR-113" /></label><button class="primary-button" type="submit">Add teacher</button></form></div>
+    <div class="modal-backdrop" id="task-modal" hidden><form class="modal" id="task-form"><button class="modal-close" type="button" data-close-modal aria-label="Close">×</button><span class="eyebrow">New reminder</span><h2>Add a task</h2><label>Task<input name="title" required placeholder="e.g. Submit lab report" /></label><label>Teacher<select name="teacher" id="task-teacher-select"></select></label><label>Due date<input name="due" type="date" required /></label><button class="primary-button" type="submit">Add task</button></form></div>
+    <div class="modal-backdrop" id="teacher-detail-modal" hidden><section class="modal teacher-detail"><button class="modal-close" type="button" data-close-modal aria-label="Close">×</button><span class="eyebrow">Teacher detail</span><h2 id="detail-name"></h2><p class="detail-subject" id="detail-subject"></p><p class="teacher-room" id="detail-room"></p><div class="detail-attendance"><span class="eyebrow">Mark today's class</span><div><button class="attendance-button present" id="detail-present" type="button">✓ Present</button><button class="attendance-button absent" id="detail-absent" type="button">× Absent</button></div></div><button class="primary-button" id="detail-add-task" type="button">Add a task for this teacher</button></section></div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
   </body>
 </html>
