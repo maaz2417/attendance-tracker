@@ -2,7 +2,8 @@ const SEMESTER_WEEKS = 16;
 const CURRENT_WEEK = 4;
 const teachers = [
   { id: 1, name: 'Dr. Nadia Iftikhar', subject: 'Fundamentals of Accounting', room: '1st Floor · Class LR-113', weeklyClasses: 2, absent: 0, attendance: null },
-  { id: 2, name: 'Mr. Muhammad Umer Haroon', subject: 'Software Construction & Development', room: 'Theory: Ground Class · Labs: Wednesday · Lab SF-02', weeklyClasses: 3, absent: 0, attendance: null },
+  { id: 2, name: 'Mr. Muhammad Umer Haroon', subject: 'Software Construction & Development · Theory', room: 'Tuesday · Ground Class · 1 class per week', weeklyClasses: 1, absent: 0, attendance: null },
+  { id: 10, name: 'Mr. Muhammad Umer Haroon', subject: 'Software Construction & Development · Lab', room: 'Wednesday · Lab SF-02 · 2 labs per week', weeklyClasses: 2, absent: 0, attendance: null },
   { id: 3, name: 'Dr. Sumaira Johar', subject: 'Computer Networks', room: 'Ground · Class LR-005', weeklyClasses: 1, absent: 0, attendance: null },
   { id: 4, name: 'Ms. Alma Irfan', subject: 'Technical & Business Writing', room: 'Ground · Class LR-010', weeklyClasses: 2, absent: 0, attendance: null },
   { id: 5, name: 'Mr. Fahim Muhammad Khan', subject: 'Software Requirements Engineering', room: '2nd Floor · Mobile and Web Lab', weeklyClasses: 2, absent: 0, attendance: null },
