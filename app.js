@@ -6,9 +6,9 @@ const teachers = [
   { id: 5, name: 'Mr. Fahim Muhammad Khan', subject: 'Software Requirements Engineering', room: '2nd Floor · Mobile and Web Lab', attendance: null },
 ];
 const tasks = [
-  { id: 1, title: 'Finish requirements engineering lab', teacher: 'Mr. Fahim Muhammad Khan', due: '2026-10-02', done: false },
-  { id: 2, title: 'Review accounting chapter 04', teacher: 'Dr. Nadia Iftikhar', due: '2026-10-04', done: false },
-  { id: 3, title: 'Prepare network topologies notes', teacher: 'Dr. Sumaira Johar', due: '2026-10-07', done: false },
+  { id: 1, title: 'Finish requirements engineering lab', teacher: 'Mr. Fahim Muhammad Khan', subject: 'Software Requirements Engineering', due: '2026-10-02', done: false },
+  { id: 2, title: 'Review accounting chapter 04', teacher: 'Dr. Nadia Iftikhar', subject: 'Fundamentals of Accounting', due: '2026-10-04', done: false },
+  { id: 3, title: 'Prepare network topologies notes', teacher: 'Dr. Sumaira Johar', subject: 'Computer Networks', due: '2026-10-07', done: false },
 ];
 const teacherGrid = document.querySelector('#teacher-grid');
 const taskList = document.querySelector('#task-list');
@@ -20,8 +20,8 @@ function renderTeachers() {
 }
 function formatDate(date) { return new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric' }).format(new Date(`${date}T12:00:00`)); }
 function renderTasks() {
-  taskList.innerHTML = tasks.map(task => `<label class="task-row"><input class="task-check" type="checkbox" data-task="${task.id}" ${task.done ? 'checked' : ''} /><span><p class="task-title ${task.done ? 'done' : ''}">${task.title}</p><p class="task-meta">${task.teacher}</p></span><span class="task-due">Due ${formatDate(task.due)}</span></label>`).join('');
-  document.querySelector('#task-count').textContent = tasks.filter(task => !task.done).length;
+  taskList.innerHTML = tasks.map(task => `<label class="task-row"><input class="task-check" type="checkbox" data-task="${task.id}" ${task.done ? 'checked' : ''} /><span><p class="task-title ${task.done ? 'done' : ''}">${task.title}</p><p class="task-meta"><strong>${task.teacher}</strong><span>${task.subject}</span></p></span><span class="task-due">Due ${formatDate(task.due)}</span></label>`).join('');
+  document.querySelector('#task-count').textContent = `${tasks.filter(task => !task.done).length} remaining`;
 }
 function showToast(message) { toast.textContent = message; toast.classList.add('show'); window.setTimeout(() => toast.classList.remove('show'), 2400); }
 function openModal(id) { document.querySelector(id).hidden = false; document.querySelector(`${id} input`).focus(); }
@@ -52,6 +52,6 @@ document.querySelector('#add-task-button').addEventListener('click', () => { doc
 document.querySelectorAll('[data-close-modal]').forEach(button => button.addEventListener('click', closeModals));
 document.querySelectorAll('.modal-backdrop').forEach(backdrop => backdrop.addEventListener('click', event => { if (event.target === backdrop) closeModals(); }));
 document.querySelector('#teacher-form').addEventListener('submit', event => { event.preventDefault(); const data = new FormData(event.target); teachers.push({ id: Date.now(), name: data.get('name'), subject: data.get('subject'), room: data.get('room') || 'Room to be added', attendance: null }); renderTeachers(); closeModals(); event.target.reset(); showToast('Teacher added to your semester.'); });
-document.querySelector('#task-form').addEventListener('submit', event => { event.preventDefault(); const data = new FormData(event.target); tasks.push({ id: Date.now(), title: data.get('title'), teacher: data.get('teacher'), due: data.get('due'), done: false }); renderTasks(); closeModals(); event.target.reset(); showToast('Task added to your list.'); });
+document.querySelector('#task-form').addEventListener('submit', event => { event.preventDefault(); const data = new FormData(event.target); const teacher = teachers.find(item => item.name === data.get('teacher')); tasks.push({ id: Date.now(), title: data.get('title'), teacher: teacher.name, subject: teacher.subject, due: data.get('due'), done: false }); renderTasks(); closeModals(); event.target.reset(); showToast('Assignment added to your list.'); });
 renderTeachers();
 renderTasks();

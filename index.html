@@ -22,13 +22,8 @@
       <section class="content" id="top">
         <header class="topbar"><div><span class="eyebrow">Monday, September 30, 2026</span><h1>Good morning, Maaz.</h1></div><button class="avatar" type="button" aria-label="Open profile">M</button></header>
         <div class="page-heading"><div><span class="eyebrow">Your semester at a glance</span><h2>Keep showing up.</h2></div><button class="quiet-button" id="add-teacher-button" type="button"><span>+</span> Add teacher</button></div>
-        <section class="stats-grid" aria-label="Attendance summary">
-          <article class="stat-card accent-card"><span class="stat-label">Overall attendance</span><strong id="overall-attendance">84%</strong><span class="stat-caption">Across 5 subjects</span></article>
-          <article class="stat-card"><span class="stat-label">Classes this week</span><strong>12</strong><span class="stat-caption">3 classes today</span></article>
-          <article class="stat-card"><span class="stat-label">Tasks due soon</span><strong id="task-count">3</strong><span class="stat-caption">Keep the momentum</span></article>
-        </section>
         <section class="section-block" id="teachers"><div class="section-heading"><div><span class="eyebrow">Your faculty</span><h3>Teachers & subjects</h3></div><span class="section-count" id="teacher-count">5 teachers</span></div><div class="teacher-grid" id="teacher-grid"></div></section>
-        <section class="section-block tasks-section" id="tasks"><div class="section-heading"><div><span class="eyebrow">Stay on top of it</span><h3>Upcoming tasks</h3></div><button class="text-button" id="add-task-button" type="button">+ Add task</button></div><div class="task-list" id="task-list"></div></section>
+        <section class="section-block tasks-section" id="tasks"><div class="section-heading"><div><span class="eyebrow">What still needs doing</span><h3>Remaining assignments</h3></div><div class="section-actions"><span class="section-count" id="task-count">3 remaining</span><button class="text-button" id="add-task-button" type="button">+ Add assignment</button></div></div><div class="task-list" id="task-list"></div></section>
       </section>
     </main>
     <div class="modal-backdrop" id="teacher-modal" hidden><form class="modal" id="teacher-form"><button class="modal-close" type="button" data-close-modal aria-label="Close">×</button><span class="eyebrow">New faculty member</span><h2>Add a teacher</h2><label>Name<input name="name" required placeholder="e.g. Dr. Nadia Iftikhar" /></label><label>Subject<input name="subject" required placeholder="e.g. Fundamentals of Accounting" /></label><label>Room or note<input name="room" placeholder="e.g. 1st Floor · Class LR-113" /></label><button class="primary-button" type="submit">Add teacher</button></form></div>
