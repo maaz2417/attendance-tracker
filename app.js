@@ -4,11 +4,15 @@ const teachers = [
   { id: 3, name: 'Dr. Sumaira Johar', subject: 'Computer Networks', room: 'Ground · Class LR-005', attendance: null },
   { id: 4, name: 'Ms. Alma Irfan', subject: 'Technical & Business Writing', room: 'Ground · Class LR-010', attendance: null },
   { id: 5, name: 'Mr. Fahim Muhammad Khan', subject: 'Software Requirements Engineering', room: '2nd Floor · Mobile and Web Lab', attendance: null },
+  { id: 6, name: 'Ms. Maimoona Khalil', subject: 'Computer Networks (Lab)', room: 'Basement · Lab B3', attendance: null },
+  { id: 7, name: 'Mr. Saim Sanan', subject: 'Parallel and Distributed Computing', room: '2nd Floor · Network and Cyber Security Lab', attendance: null },
+  { id: 8, name: 'Dr. Muhammad Asim', subject: 'Parallel and Distributed Computing', room: '1st Floor · Class LR-114', attendance: null },
 ];
 const tasks = [
   { id: 1, title: 'Finish requirements engineering lab', teacher: 'Mr. Fahim Muhammad Khan', subject: 'Software Requirements Engineering', due: '2026-10-02', done: false },
   { id: 2, title: 'Review accounting chapter 04', teacher: 'Dr. Nadia Iftikhar', subject: 'Fundamentals of Accounting', due: '2026-10-04', done: false },
   { id: 3, title: 'Prepare network topologies notes', teacher: 'Dr. Sumaira Johar', subject: 'Computer Networks', due: '2026-10-07', done: false },
+  { id: 4, title: 'Complete distributed systems lab', teacher: 'Mr. Saim Sanan', subject: 'Parallel and Distributed Computing', due: '2026-10-09', done: false },
 ];
 const teacherGrid = document.querySelector('#teacher-grid');
 const taskList = document.querySelector('#task-list');
