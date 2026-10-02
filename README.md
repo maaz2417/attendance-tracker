@@ -1,4 +1,4 @@
-# Attendance Tracker
+# BunkBalance
 
 Mobile-first university attendance tracker for managing Semester 5 subjects, teachers, schedules, attendance, assignments, and makeup classes.
 
