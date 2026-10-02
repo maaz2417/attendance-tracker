@@ -110,7 +110,6 @@ button { cursor: pointer; }
 .modal { position: relative; display: grid; gap: 14px; width: min(100%, 420px); padding: 30px; border-radius: 9px; background: var(--paper); box-shadow: 0 20px 60px rgba(46, 52, 64, .2); }
 .modal h2 { margin: 0 0 8px; font-size: 29px; font-weight: 400; }
 .modal label { display: grid; gap: 6px; color: var(--muted); font: 11px Arial, sans-serif; }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .modal input, .modal select { width: 100%; border: 1px solid var(--line); border-radius: 4px; padding: 11px; color: var(--ink); background: #ffffff; }
 .modal-close { position: absolute; top: 15px; right: 17px; border: 0; background: transparent; color: var(--muted); font-size: 25px; line-height: 1; }
 .primary-button { margin-top: 7px; padding: 13px; }
