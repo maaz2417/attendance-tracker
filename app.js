@@ -19,6 +19,8 @@ const authIntro = document.querySelector('#auth-intro');
 const authSubmit = document.querySelector('#auth-submit');
 const authToggle = document.querySelector('#auth-toggle');
 
+if (window.location.search) window.history.replaceState({}, document.title, window.location.pathname + window.location.hash);
+
 function isConfigured() {
   return !window.SUPABASE_URL.includes('YOUR-PROJECT') && !window.SUPABASE_PUBLISHABLE_KEY.includes('YOUR-PUBLISHABLE');
 }

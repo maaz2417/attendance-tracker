@@ -34,6 +34,10 @@ alter table public.teachers enable row level security;
 alter table public.tasks enable row level security;
 alter table public.attendance enable row level security;
 
+drop policy if exists "Users manage their own teachers" on public.teachers;
+drop policy if exists "Users manage their own tasks" on public.tasks;
+drop policy if exists "Users manage their own attendance" on public.attendance;
+
 create policy "Users manage their own teachers"
 on public.teachers for all
 using (auth.uid() = user_id)
