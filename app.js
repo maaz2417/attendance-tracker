@@ -5,25 +5,10 @@ let currentUser;
 let teachers = [];
 let tasks = [];
 let attendance = [];
-let authMode = 'signin';
 
 const teacherGrid = document.querySelector('#teacher-grid');
 const taskList = document.querySelector('#task-list');
 const toast = document.querySelector('#toast');
-const authScreen = document.querySelector('#auth-screen');
-const appShell = document.querySelector('.app-shell');
-const authForm = document.querySelector('#auth-form');
-const authMessage = document.querySelector('#auth-message');
-const authTitle = document.querySelector('#auth-title');
-const authIntro = document.querySelector('#auth-intro');
-const authSubmit = document.querySelector('#auth-submit');
-const authToggle = document.querySelector('#auth-toggle');
-
-if (window.location.search) window.history.replaceState({}, document.title, window.location.pathname + window.location.hash);
-
-function isConfigured() {
-  return !window.SUPABASE_URL.includes('YOUR-PROJECT') && !window.SUPABASE_PUBLISHABLE_KEY.includes('YOUR-PUBLISHABLE');
-}
 
 function escapeHtml(value) {
   return String(value ?? '').replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character]));
@@ -35,30 +20,6 @@ function today() {
 
 function initials(name) {
   return name.split(' ').filter(word => word.length > 2).slice(0, 2).map(word => word[0]).join('');
-}
-
-function setAuthMessage(message, success = false) {
-  authMessage.textContent = message;
-  authMessage.classList.toggle('success', success);
-}
-
-function updateAuthMode() {
-  const signingIn = authMode === 'signin';
-  authTitle.textContent = signingIn ? 'Welcome back.' : 'Start your semester.';
-  authIntro.textContent = signingIn ? 'Sign in to keep your attendance and assignments synced.' : 'Create an account to keep your attendance and assignments synced.';
-  authSubmit.textContent = signingIn ? 'Sign in' : 'Create account';
-  authToggle.textContent = signingIn ? 'Create an account' : 'I already have an account';
-  setAuthMessage('');
-}
-
-function showApp() {
-  authScreen.hidden = true;
-  appShell.classList.add('ready');
-}
-
-function showAuth() {
-  authScreen.hidden = false;
-  appShell.classList.remove('ready');
 }
 
 function classProgress(teacher) {
@@ -210,36 +171,20 @@ document.querySelector('#task-form').addEventListener('submit', async event => {
   showToast('Assignment added to your list.');
 });
 
-async function enterApp(session) {
+async function loadAuthenticatedApp(session) {
   currentUser = session?.user || null;
-  if (!currentUser) return showAuth();
+  if (!currentUser) return window.location.replace('index.html');
   document.querySelector('#greeting').textContent = `Good morning, ${currentUser.email.split('@')[0]}.`;
-  showApp();
   try {
     await loadData();
   } catch (error) {
-    showAuth();
-    setAuthMessage(`Database setup is incomplete: ${error.message}`);
+    showToast(`Database setup is incomplete: ${error.message}`);
   }
 }
 
-authToggle.addEventListener('click', () => { authMode = authMode === 'signin' ? 'signup' : 'signin'; updateAuthMode(); });
-authForm.addEventListener('submit', async event => {
-  event.preventDefault();
-  if (!isConfigured()) return setAuthMessage('Add your Supabase URL and publishable key in supabase-config.js.');
-  const data = new FormData(event.target);
-  const request = authMode === 'signin'
-    ? database.auth.signInWithPassword({ email: data.get('email'), password: data.get('password') })
-    : database.auth.signUp({ email: data.get('email'), password: data.get('password') });
-  const { data: result, error } = await request;
-  if (error) return setAuthMessage(error.message);
-  if (authMode === 'signup' && !result.session) return setAuthMessage('Account created. Check your email to confirm your account.', true);
-  await enterApp(result.session);
-  event.target.reset();
+document.querySelector('#logout-button').addEventListener('click', async () => {
+  await database.auth.signOut();
+  window.location.replace('index.html');
 });
 
-document.querySelector('#logout-button').addEventListener('click', () => database.auth.signOut());
-
-database.auth.onAuthStateChange((_event, session) => enterApp(session));
-
-updateAuthMode();
+database.auth.getSession().then(({ data }) => loadAuthenticatedApp(data.session));
