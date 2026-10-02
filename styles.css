@@ -52,6 +52,10 @@ button { cursor: pointer; }
 .avatar { width: 38px; height: 38px; border: 0; border-radius: 50%; background: var(--frost); color: var(--ink); font: 700 14px Arial, sans-serif; }
 .page-heading { margin: 68px 0 27px; align-items: end; }
 .page-heading h2 { margin: 4px 0 0; font-size: clamp(31px, 5vw, 52px); line-height: 1; letter-spacing: -2px; font-weight: 400; }
+.page-actions { display: flex; align-items: center; gap: 18px; }
+.overall-absence { display: grid; gap: 1px; padding: 8px 12px; border-left: 3px solid var(--red); background: #fff0f1; color: #a84f59; }
+.overall-absence strong { font: 700 25px Arial, sans-serif; line-height: 1; }
+.overall-absence span { font: 700 10px Arial, sans-serif; letter-spacing: .7px; text-transform: uppercase; }
 .quiet-button, .primary-button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 0; border-radius: 5px; background: var(--blue); color: #ffffff; padding: 11px 15px; font: 700 12px Arial, sans-serif; }
 .quiet-button span { font-size: 18px; line-height: 12px; }
 
@@ -75,6 +79,9 @@ button { cursor: pointer; }
 .class-progress div:last-child { border-left-color: var(--frost); }
 .class-progress strong { color: var(--ink); font: 700 16px Arial, sans-serif; }
 .class-progress span { color: var(--muted); font: 10px Arial, sans-serif; text-transform: uppercase; }
+.absence-total { display: flex; align-items: baseline; gap: 8px; margin-top: 15px; padding: 12px 14px; border-radius: 6px; background: #fff0f1; color: #a84f59; }
+.absence-total strong { font: 700 30px Arial, sans-serif; line-height: 1; }
+.absence-total span { font: 700 11px Arial, sans-serif; letter-spacing: .8px; text-transform: uppercase; }
 .teacher-room { margin: 20px 0 0; color: var(--muted); font: 11px Arial, sans-serif; }
 .class-counter { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 17px; }
 .class-counter div { display: grid; gap: 2px; padding: 9px 8px; border: 1px solid var(--line); border-radius: 5px; background: #f7f9fb; }
@@ -139,6 +146,7 @@ button { cursor: pointer; }
   .auth-panel { padding: 28px 22px; }
   .topbar h1 { font-size: 23px; }
   .page-heading { align-items: start; flex-direction: column; gap: 18px; }
+  .page-actions { width: 100%; justify-content: space-between; }
   .page-heading h2 { font-size: 41px; }
   .quiet-button { width: 100%; }
   .task-row { grid-template-columns: 25px 1fr; }
