@@ -210,6 +210,19 @@ document.querySelector('#task-form').addEventListener('submit', async event => {
   showToast('Assignment added to your list.');
 });
 
+async function enterApp(session) {
+  currentUser = session?.user || null;
+  if (!currentUser) return showAuth();
+  document.querySelector('#greeting').textContent = `Good morning, ${currentUser.email.split('@')[0]}.`;
+  showApp();
+  try {
+    await loadData();
+  } catch (error) {
+    showAuth();
+    setAuthMessage(`Database setup is incomplete: ${error.message}`);
+  }
+}
+
 authToggle.addEventListener('click', () => { authMode = authMode === 'signin' ? 'signup' : 'signin'; updateAuthMode(); });
 authForm.addEventListener('submit', async event => {
   event.preventDefault();
@@ -221,22 +234,12 @@ authForm.addEventListener('submit', async event => {
   const { data: result, error } = await request;
   if (error) return setAuthMessage(error.message);
   if (authMode === 'signup' && !result.session) return setAuthMessage('Account created. Check your email to confirm your account.', true);
+  await enterApp(result.session);
   event.target.reset();
 });
 
 document.querySelector('#logout-button').addEventListener('click', () => database.auth.signOut());
 
-database.auth.onAuthStateChange(async (_event, session) => {
-  currentUser = session?.user || null;
-  if (!currentUser) return showAuth();
-  document.querySelector('#greeting').textContent = `Good morning, ${currentUser.email.split('@')[0]}.`;
-  showApp();
-  try {
-    await loadData();
-  } catch (error) {
-    showAuth();
-    setAuthMessage(`Database setup is incomplete: ${error.message}`);
-  }
-});
+database.auth.onAuthStateChange((_event, session) => enterApp(session));
 
 updateAuthMode();
