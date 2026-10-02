@@ -34,7 +34,7 @@ function formatDate(date) {
 }
 
 function renderTasks() {
-  taskList.innerHTML = tasks.map(task => `<label class="task-row"><input class="task-check" type="checkbox" data-task="${task.id}" ${task.done ? 'checked' : ''} /><span><p class="task-title ${task.done ? 'done' : ''}">${escapeHtml(task.title)}</p><p class="task-meta"><strong>${escapeHtml(task.teacher)}</strong><span>${escapeHtml(task.subject)}</span></p></span><span class="task-due">Due ${formatDate(task.due)}</span></label>`).join('');
+  taskList.innerHTML = tasks.map(task => `<div class="task-row"><input class="task-check" type="checkbox" data-task="${task.id}" ${task.done ? 'checked' : ''} /><span><p class="task-title ${task.done ? 'done' : ''}">${escapeHtml(task.title)}</p><p class="task-meta"><strong>${escapeHtml(task.teacher)}</strong><span>${escapeHtml(task.subject)}</span></p></span><span class="task-due">Due ${formatDate(task.due)}</span><button class="delete-task" type="button" data-delete-task="${task.id}" aria-label="Delete ${escapeHtml(task.title)}" title="Delete assignment">🗑</button></div>`).join('');
   document.querySelector('#task-count').textContent = `${tasks.filter(task => !task.done).length} remaining`;
 }
 
@@ -126,6 +126,18 @@ taskList.addEventListener('change', async event => {
   task.done = completed;
   renderTasks();
   showToast(task.done ? 'Task completed.' : 'Task moved back to upcoming.');
+});
+
+taskList.addEventListener('click', async event => {
+  const deleteButton = event.target.closest('[data-delete-task]');
+  if (!deleteButton) return;
+  const task = tasks.find(item => item.id === deleteButton.dataset.deleteTask);
+  if (!task) return;
+  const { error } = await database.from('tasks').delete().eq('id', task.id);
+  if (error) return showToast(error.message);
+  tasks = tasks.filter(item => item.id !== task.id);
+  renderTasks();
+  showToast('Assignment removed.');
 });
 
 document.querySelector('#add-teacher-button').addEventListener('click', () => openModal('#teacher-modal'));
