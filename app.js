@@ -24,7 +24,7 @@ function renderTeachers() {
   teacherGrid.innerHTML = teachers.map(teacher => {
     const classesDone = attendance.filter(item => item.teacher_id === teacher.id).length;
     const classesLeft = Math.max((teacher.semester_classes || 0) - classesDone, 0);
-    return `<article class="teacher-card"><div class="teacher-top"><div><h4>${escapeHtml(teacher.name)}</h4><p class="teacher-subject">${escapeHtml(teacher.subject)}</p></div><span class="teacher-initial">${escapeHtml(initials(teacher.name))}</span></div><div class="teacher-facts"><span><strong>${teacher.credit_hours ?? '—'}</strong> credit hours</span><span><strong>${teacher.semester_classes ?? '—'}</strong> semester classes</span></div><div class="class-progress"><div><strong>${classesDone}</strong><span>classes done</span></div><div><strong>${classesLeft}</strong><span>classes left</span></div></div><div class="absence-total"><strong>${teacher.absent}</strong><span>absences</span></div><p class="teacher-room">⌖ ${escapeHtml(teacher.room)}</p><div class="teacher-actions"><button class="attendance-button present ${teacher.attendance === 'present' ? 'selected' : ''}" data-attendance="present" data-teacher="${teacher.id}" type="button">✓ Present</button><button class="attendance-button absent ${teacher.attendance === 'absent' ? 'selected' : ''}" data-attendance="absent" data-teacher="${teacher.id}" type="button">× Absent</button><button class="open-button" data-open-teacher="${teacher.id}" type="button">Open teacher</button></div><button class="remove-teacher" data-remove-teacher="${teacher.id}" type="button">Remove teacher</button></article>`;
+    return `<article class="teacher-card"><div class="teacher-top"><div><h4>${escapeHtml(teacher.name)}</h4><p class="teacher-subject">${escapeHtml(teacher.subject)}</p></div><span class="teacher-initial">${escapeHtml(initials(teacher.name))}</span></div><div class="teacher-facts"><span><strong>${teacher.credit_hours ?? '—'}</strong> credit hours</span><span><strong>${teacher.semester_classes ?? '—'}</strong> semester classes</span></div><div class="class-progress"><div><strong>${classesDone}</strong><span>classes done</span></div><div><strong>${classesLeft}</strong><span>classes left</span></div></div><div class="absence-total"><strong>${teacher.absent}</strong><span>absences</span></div><p class="teacher-room">⌖ ${escapeHtml(teacher.room)}</p><div class="teacher-actions"><button class="attendance-button present" data-attendance="present" data-teacher="${teacher.id}" type="button">✓ Present</button><button class="attendance-button absent" data-attendance="absent" data-teacher="${teacher.id}" type="button">× Absent</button><button class="open-button" data-open-teacher="${teacher.id}" type="button">Open teacher</button></div><button class="remove-teacher" data-remove-teacher="${teacher.id}" type="button">Remove teacher</button></article>`;
   }).join('');
   document.querySelector('#teacher-count').textContent = `${teachers.length} teachers`;
 }
@@ -59,8 +59,6 @@ function openTeacherDetail(teacher) {
   document.querySelector('#detail-name').dataset.teacher = teacher.id;
   document.querySelector('#detail-subject').textContent = teacher.subject;
   document.querySelector('#detail-room').textContent = `⌖ ${teacher.room}`;
-  document.querySelector('#detail-present').classList.toggle('selected', teacher.attendance === 'present');
-  document.querySelector('#detail-absent').classList.toggle('selected', teacher.attendance === 'absent');
   document.querySelector('#teacher-detail-modal').hidden = false;
 }
 
@@ -76,7 +74,6 @@ async function loadData() {
     ...teacher,
     weeklyClasses: teacher.weekly_classes,
     absent: attendance.filter(item => item.teacher_id === teacher.id && item.status === 'absent').length,
-    attendance: attendance.find(item => item.teacher_id === teacher.id && item.class_date === today())?.status || null,
   }));
   tasks = (taskRows || []).map(task => ({ ...task, done: task.completed, teacher: task.teachers?.name || 'Unassigned', subject: task.teachers?.subject || '' }));
   renderTeachers();
@@ -84,15 +81,9 @@ async function loadData() {
 }
 
 async function setAttendance(teacher, status) {
-  const previous = teacher.attendance;
-  if (previous === status) return;
-  const { error } = await database.from('attendance').upsert({ user_id: currentUser.id, teacher_id: teacher.id, class_date: today(), status }, { onConflict: 'teacher_id,class_date' });
+  const { error } = await database.from('attendance').insert({ user_id: currentUser.id, teacher_id: teacher.id, class_date: today(), status });
   if (error) return showToast(error.message);
-  const existingRecord = attendance.find(item => item.teacher_id === teacher.id && item.class_date === today());
-  if (existingRecord) existingRecord.status = status;
-  else attendance.push({ teacher_id: teacher.id, class_date: today(), status });
-  teacher.attendance = status;
-  if (previous === 'absent') teacher.absent -= 1;
+  attendance.push({ teacher_id: teacher.id, class_date: today(), status });
   if (status === 'absent') teacher.absent += 1;
   renderTeachers();
   showToast(`${teacher.name}: marked ${status}.`);

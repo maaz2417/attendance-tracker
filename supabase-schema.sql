@@ -31,9 +31,10 @@ create table if not exists public.attendance (
   teacher_id uuid not null references public.teachers(id) on delete cascade,
   class_date date not null,
   status text not null check (status in ('present', 'absent')),
-  created_at timestamptz not null default now(),
-  unique (teacher_id, class_date)
+  created_at timestamptz not null default now()
 );
+
+alter table public.attendance drop constraint if exists attendance_teacher_id_class_date_key;
 
 alter table public.teachers enable row level security;
 alter table public.tasks enable row level security;
