@@ -22,7 +22,9 @@ function initials(name) {
 
 function renderTeachers() {
   teacherGrid.innerHTML = teachers.map(teacher => {
-    return `<article class="teacher-card"><div class="teacher-top"><div><h4>${escapeHtml(teacher.name)}</h4><p class="teacher-subject">${escapeHtml(teacher.subject)}</p></div><span class="teacher-initial">${escapeHtml(initials(teacher.name))}</span></div><div class="teacher-facts"><span><strong>${teacher.credit_hours ?? '—'}</strong> credit hours</span><span><strong>${teacher.semester_classes ?? '—'}</strong> semester classes</span></div><p class="teacher-room">⌖ ${escapeHtml(teacher.room)}</p><div class="teacher-actions"><button class="attendance-button present ${teacher.attendance === 'present' ? 'selected' : ''}" data-attendance="present" data-teacher="${teacher.id}" type="button">✓ Present</button><button class="attendance-button absent ${teacher.attendance === 'absent' ? 'selected' : ''}" data-attendance="absent" data-teacher="${teacher.id}" type="button">× Absent</button><button class="open-button" data-open-teacher="${teacher.id}" type="button">Open teacher</button></div><p class="teacher-attendance-total">${teacher.absent} absences recorded</p><button class="remove-teacher" data-remove-teacher="${teacher.id}" type="button">Remove teacher</button></article>`;
+    const classesDone = attendance.filter(item => item.teacher_id === teacher.id).length;
+    const classesLeft = Math.max((teacher.semester_classes || 0) - classesDone, 0);
+    return `<article class="teacher-card"><div class="teacher-top"><div><h4>${escapeHtml(teacher.name)}</h4><p class="teacher-subject">${escapeHtml(teacher.subject)}</p></div><span class="teacher-initial">${escapeHtml(initials(teacher.name))}</span></div><div class="teacher-facts"><span><strong>${teacher.credit_hours ?? '—'}</strong> credit hours</span><span><strong>${teacher.semester_classes ?? '—'}</strong> semester classes</span></div><div class="class-progress"><div><strong>${classesDone}</strong><span>classes done</span></div><div><strong>${classesLeft}</strong><span>classes left</span></div></div><p class="teacher-room">⌖ ${escapeHtml(teacher.room)}</p><div class="teacher-actions"><button class="attendance-button present ${teacher.attendance === 'present' ? 'selected' : ''}" data-attendance="present" data-teacher="${teacher.id}" type="button">✓ Present</button><button class="attendance-button absent ${teacher.attendance === 'absent' ? 'selected' : ''}" data-attendance="absent" data-teacher="${teacher.id}" type="button">× Absent</button><button class="open-button" data-open-teacher="${teacher.id}" type="button">Open teacher</button></div><p class="teacher-attendance-total">${teacher.absent} absences recorded</p><button class="remove-teacher" data-remove-teacher="${teacher.id}" type="button">Remove teacher</button></article>`;
   }).join('');
   document.querySelector('#teacher-count').textContent = `${teachers.length} teachers`;
 }
@@ -86,6 +88,9 @@ async function setAttendance(teacher, status) {
   if (previous === status) return;
   const { error } = await database.from('attendance').upsert({ user_id: currentUser.id, teacher_id: teacher.id, class_date: today(), status }, { onConflict: 'teacher_id,class_date' });
   if (error) return showToast(error.message);
+  const existingRecord = attendance.find(item => item.teacher_id === teacher.id && item.class_date === today());
+  if (existingRecord) existingRecord.status = status;
+  else attendance.push({ teacher_id: teacher.id, class_date: today(), status });
   teacher.attendance = status;
   if (previous === 'absent') teacher.absent -= 1;
   if (status === 'absent') teacher.absent += 1;
