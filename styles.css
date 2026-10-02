@@ -1,12 +1,12 @@
 :root {
   font-family: Georgia, 'Times New Roman', serif;
-  color: #eceff4;
-  background: #2e3440;
-  --ink: #eceff4;
-  --muted: #b8c0ce;
-  --line: #4c566a;
-  --cream: #2e3440;
-  --paper: #3b4252;
+  color: #273142;
+  background: #ffffff;
+  --ink: #273142;
+  --muted: #687386;
+  --line: #d9dee7;
+  --cream: #ffffff;
+  --paper: #ffffff;
   --frost: #88c0d0;
   --blue: #5e81ac;
   --green: #a3be8c;
@@ -20,25 +20,25 @@ button, input, select { font: inherit; }
 button { cursor: pointer; }
 
 .app-shell { min-height: 100vh; }
-.sidebar { display: flex; flex-direction: column; padding: 38px 27px; background: #2e3440; color: #eceff4; }
+.sidebar { display: flex; flex-direction: column; padding: 38px 27px; background: #ffffff; color: var(--ink); }
 .brand { display: flex; align-items: center; gap: 10px; color: inherit; font: 700 20px Georgia, serif; text-decoration: none; letter-spacing: -.4px; }
-.brand-mark { display: grid; place-items: center; width: 29px; height: 29px; border-radius: 8px 8px 8px 2px; background: var(--frost); color: #2e3440; font-family: Arial, sans-serif; }
+.brand-mark { display: grid; place-items: center; width: 29px; height: 29px; border-radius: 8px 8px 8px 2px; background: var(--frost); color: var(--ink); font-family: Arial, sans-serif; }
 .main-nav { display: grid; gap: 7px; margin-top: 80px; }
 .nav-link { display: flex; align-items: center; gap: 12px; padding: 12px 13px; border-radius: 7px; color: #aeb7c6; text-decoration: none; }
-.nav-link.active, .nav-link:hover { background: #434c5e; color: #eceff4; }
+.nav-link.active, .nav-link:hover { background: #eef3f7; color: var(--ink); }
 .nav-icon { width: 18px; font: 18px Arial, sans-serif; text-align: center; }
-.semester-card { display: grid; gap: 3px; margin-top: auto; padding: 16px; border: 1px solid #4c566a; border-radius: 8px; color: #d8dee9; font-size: 12px; }
-.semester-card strong { color: #eceff4; font-size: 15px; }
-.sidebar-note { margin: 18px 4px 0; color: #9aa6b8; font-size: 12px; }
+.semester-card { display: grid; gap: 3px; margin-top: auto; padding: 16px; border: 1px solid var(--line); border-radius: 8px; color: var(--muted); font-size: 12px; }
+.semester-card strong { color: var(--ink); font-size: 15px; }
+.sidebar-note { margin: 18px 4px 0; color: var(--muted); font-size: 12px; }
 
 .content { width: min(100%, 1280px); margin: 0 auto; padding: 38px clamp(25px, 5vw, 75px) 70px; }
 .topbar, .page-heading, .section-heading { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
 .topbar h1 { margin: 4px 0 0; font-size: clamp(24px, 3vw, 32px); letter-spacing: -.8px; }
 .eyebrow { display: block; color: var(--muted); font: 700 10px Arial, sans-serif; letter-spacing: 1.3px; text-transform: uppercase; }
-.avatar { width: 38px; height: 38px; border: 0; border-radius: 50%; background: var(--frost); color: #2e3440; font: 700 14px Arial, sans-serif; }
+.avatar { width: 38px; height: 38px; border: 0; border-radius: 50%; background: var(--frost); color: var(--ink); font: 700 14px Arial, sans-serif; }
 .page-heading { margin: 68px 0 27px; align-items: end; }
 .page-heading h2 { margin: 4px 0 0; font-size: clamp(31px, 5vw, 52px); line-height: 1; letter-spacing: -2px; font-weight: 400; }
-.quiet-button, .primary-button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 0; border-radius: 5px; background: var(--blue); color: #eceff4; padding: 11px 15px; font: 700 12px Arial, sans-serif; }
+.quiet-button, .primary-button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 0; border-radius: 5px; background: var(--blue); color: #ffffff; padding: 11px 15px; font: 700 12px Arial, sans-serif; }
 .quiet-button span { font-size: 18px; line-height: 12px; }
 
 .section-block { margin-top: 56px; }
@@ -47,26 +47,26 @@ button { cursor: pointer; }
 .section-actions { display: flex; align-items: center; gap: 18px; }
 .section-count { color: var(--muted); font: 12px Arial, sans-serif; }
 .teacher-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
-.teacher-card { padding: 20px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); transition: transform .2s ease, box-shadow .2s ease; }
+.teacher-card { padding: 20px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); box-shadow: 0 4px 16px rgba(39, 49, 66, .05); transition: transform .2s ease, box-shadow .2s ease; }
 .teacher-card:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(46, 52, 64, .12); }
 .teacher-top { display: flex; align-items: start; justify-content: space-between; gap: 12px; }
-.teacher-initial { display: grid; place-items: center; width: 43px; height: 43px; border-radius: 50%; background: #434c5e; color: var(--frost); font: 700 15px Arial, sans-serif; }
+.teacher-initial { display: grid; place-items: center; width: 43px; height: 43px; border-radius: 50%; background: #eef3f7; color: #47748a; font: 700 15px Arial, sans-serif; }
 .teacher-card h4 { margin: 0; font-size: 18px; font-weight: 400; }
 .teacher-subject { margin: 3px 0 0; color: var(--muted); font-size: 13px; }
 .teacher-room { margin: 20px 0 0; color: var(--muted); font: 11px Arial, sans-serif; }
 .class-counter { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 17px; }
-.class-counter div { display: grid; gap: 2px; padding: 9px 8px; border: 1px solid var(--line); border-radius: 5px; background: #434c5e; }
+.class-counter div { display: grid; gap: 2px; padding: 9px 8px; border: 1px solid var(--line); border-radius: 5px; background: #f7f9fb; }
 .class-counter strong { color: var(--ink); font: 700 18px Arial, sans-serif; }
 .class-counter span { color: var(--muted); font: 10px Arial, sans-serif; text-transform: uppercase; letter-spacing: .5px; }
 .class-counter div:last-child strong, .class-counter div:last-child span { color: #e18b93; }
 .semester-total { margin: 9px 0 0; color: var(--muted); font: 10px Arial, sans-serif; }
 .teacher-actions { display: flex; gap: 8px; margin-top: 19px; padding-top: 15px; border-top: 1px solid var(--line); }
 .attendance-button, .open-button { flex: 1; border: 1px solid var(--line); border-radius: 4px; background: transparent; padding: 9px 6px; color: var(--muted); font: 700 11px Arial, sans-serif; }
-.attendance-button.present { border-color: #75965f; background: #5f7f4d; color: #eceff4; }
-.attendance-button.present:hover, .attendance-button.present.selected { border-color: var(--green); background: #a3be8c; color: #2e3440; }
-.attendance-button.absent { border-color: #a84f59; background: #9f4d56; color: #eceff4; }
-.attendance-button.absent:hover, .attendance-button.absent.selected { border-color: var(--red); background: #bf616a; color: #eceff4; }
-.open-button { flex: 1.3; background: #4c566a; color: #eceff4; }
+.attendance-button.present { border-color: #75965f; background: #edf5e9; color: #416136; }
+.attendance-button.present:hover, .attendance-button.present.selected { border-color: var(--green); background: #a3be8c; color: #273142; }
+.attendance-button.absent { border-color: #c77a82; background: #fff0f1; color: #a84f59; }
+.attendance-button.absent:hover, .attendance-button.absent.selected { border-color: var(--red); background: #bf616a; color: #ffffff; }
+.open-button { flex: 1.3; background: #eef3f7; color: var(--ink); }
 .remove-teacher { margin-top: 10px; border: 0; background: transparent; color: #d9969d; font: 700 10px Arial, sans-serif; text-align: left; }
 .remove-teacher:hover { color: var(--red); text-decoration: underline; }
 .text-button { border: 0; background: transparent; color: var(--blue); font: 700 12px Arial, sans-serif; }
@@ -77,22 +77,22 @@ button { cursor: pointer; }
 .task-title { margin: 0; font-size: 15px; }
 .task-title.done { color: var(--muted); text-decoration: line-through; }
 .task-meta { display: flex; flex-wrap: wrap; gap: 5px 12px; margin: 3px 0 0; color: var(--muted); font: 11px Arial, sans-serif; }
-.task-meta strong { color: #d8dee9; font-weight: 700; }
+.task-meta strong { color: var(--ink); font-weight: 700; }
 .task-due { color: var(--red); font: 11px Arial, sans-serif; }
 
-.modal-backdrop { position: fixed; inset: 0; display: grid; place-items: center; padding: 20px; background: rgba(46, 52, 64, .55); z-index: 5; }
+.modal-backdrop { position: fixed; inset: 0; display: grid; place-items: center; padding: 20px; background: rgba(39, 49, 66, .35); z-index: 5; }
 .modal-backdrop[hidden] { display: none; }
 .modal { position: relative; display: grid; gap: 14px; width: min(100%, 420px); padding: 30px; border-radius: 9px; background: var(--paper); box-shadow: 0 20px 60px rgba(46, 52, 64, .2); }
 .modal h2 { margin: 0 0 8px; font-size: 29px; font-weight: 400; }
 .modal label { display: grid; gap: 6px; color: var(--muted); font: 11px Arial, sans-serif; }
-.modal input, .modal select { width: 100%; border: 1px solid var(--line); border-radius: 4px; padding: 11px; color: var(--ink); background: #434c5e; }
+.modal input, .modal select { width: 100%; border: 1px solid var(--line); border-radius: 4px; padding: 11px; color: var(--ink); background: #ffffff; }
 .modal-close { position: absolute; top: 15px; right: 17px; border: 0; background: transparent; color: var(--muted); font-size: 25px; line-height: 1; }
 .primary-button { margin-top: 7px; padding: 13px; }
 .detail-subject { margin: -7px 0 0; color: var(--muted); }
 .detail-attendance { display: grid; gap: 10px; margin-top: 10px; padding-top: 16px; border-top: 1px solid var(--line); }
 .detail-attendance div { display: flex; gap: 8px; }
 .detail-attendance .attendance-button { flex: 1; }
-.toast { position: fixed; right: 24px; bottom: 24px; padding: 12px 17px; border-radius: 4px; background: var(--ink); color: #eceff4; font: 12px Arial, sans-serif; opacity: 0; transform: translateY(10px); transition: .25s ease; pointer-events: none; }
+.toast { position: fixed; right: 24px; bottom: 24px; padding: 12px 17px; border-radius: 4px; background: var(--ink); color: #ffffff; font: 12px Arial, sans-serif; opacity: 0; transform: translateY(10px); transition: .25s ease; pointer-events: none; }
 .toast.show { opacity: 1; transform: translateY(0); }
 
 @media (max-width: 720px) {
