@@ -67,6 +67,9 @@ button { cursor: pointer; }
 .teacher-initial { display: grid; place-items: center; width: 43px; height: 43px; border-radius: 50%; background: #eef3f7; color: #47748a; font: 700 15px Arial, sans-serif; }
 .teacher-card h4 { margin: 0; font-size: 18px; font-weight: 400; }
 .teacher-subject { margin: 3px 0 0; color: var(--muted); font-size: 13px; }
+.teacher-facts { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 17px; }
+.teacher-facts span { padding: 6px 8px; border: 1px solid var(--line); border-radius: 4px; background: #f7f9fb; color: var(--muted); font: 10px Arial, sans-serif; }
+.teacher-facts strong { color: var(--ink); font-size: 12px; }
 .teacher-room { margin: 20px 0 0; color: var(--muted); font: 11px Arial, sans-serif; }
 .class-counter { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 17px; }
 .class-counter div { display: grid; gap: 2px; padding: 9px 8px; border: 1px solid var(--line); border-radius: 5px; background: #f7f9fb; }
@@ -99,6 +102,7 @@ button { cursor: pointer; }
 .modal { position: relative; display: grid; gap: 14px; width: min(100%, 420px); padding: 30px; border-radius: 9px; background: var(--paper); box-shadow: 0 20px 60px rgba(46, 52, 64, .2); }
 .modal h2 { margin: 0 0 8px; font-size: 29px; font-weight: 400; }
 .modal label { display: grid; gap: 6px; color: var(--muted); font: 11px Arial, sans-serif; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .modal input, .modal select { width: 100%; border: 1px solid var(--line); border-radius: 4px; padding: 11px; color: var(--ink); background: #ffffff; }
 .modal-close { position: absolute; top: 15px; right: 17px; border: 0; background: transparent; color: var(--muted); font-size: 25px; line-height: 1; }
 .primary-button { margin-top: 7px; padding: 13px; }

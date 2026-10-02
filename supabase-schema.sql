@@ -6,9 +6,14 @@ create table if not exists public.teachers (
   name text not null,
   subject text not null,
   room text,
+  credit_hours integer check (credit_hours between 1 and 12),
+  semester_classes integer check (semester_classes > 0),
   weekly_classes integer not null default 1 check (weekly_classes > 0),
   created_at timestamptz not null default now()
 );
+
+alter table public.teachers add column if not exists credit_hours integer check (credit_hours between 1 and 12);
+alter table public.teachers add column if not exists semester_classes integer check (semester_classes > 0);
 
 create table if not exists public.tasks (
   id uuid primary key default gen_random_uuid(),

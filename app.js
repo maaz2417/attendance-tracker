@@ -22,7 +22,7 @@ function initials(name) {
 
 function renderTeachers() {
   teacherGrid.innerHTML = teachers.map(teacher => {
-    return `<article class="teacher-card"><div class="teacher-top"><div><h4>${escapeHtml(teacher.name)}</h4><p class="teacher-subject">${escapeHtml(teacher.subject)}</p></div><span class="teacher-initial">${escapeHtml(initials(teacher.name))}</span></div><p class="teacher-room">⌖ ${escapeHtml(teacher.room)}</p><div class="teacher-actions"><button class="attendance-button present ${teacher.attendance === 'present' ? 'selected' : ''}" data-attendance="present" data-teacher="${teacher.id}" type="button">✓ Present</button><button class="attendance-button absent ${teacher.attendance === 'absent' ? 'selected' : ''}" data-attendance="absent" data-teacher="${teacher.id}" type="button">× Absent</button><button class="open-button" data-open-teacher="${teacher.id}" type="button">Open teacher</button></div><p class="teacher-attendance-total">${teacher.absent} absences recorded</p><button class="remove-teacher" data-remove-teacher="${teacher.id}" type="button">Remove teacher</button></article>`;
+    return `<article class="teacher-card"><div class="teacher-top"><div><h4>${escapeHtml(teacher.name)}</h4><p class="teacher-subject">${escapeHtml(teacher.subject)}</p></div><span class="teacher-initial">${escapeHtml(initials(teacher.name))}</span></div><div class="teacher-facts"><span><strong>${teacher.credit_hours ?? '—'}</strong> credit hours</span><span><strong>${teacher.semester_classes ?? '—'}</strong> semester classes</span></div><p class="teacher-room">⌖ ${escapeHtml(teacher.room)}</p><div class="teacher-actions"><button class="attendance-button present ${teacher.attendance === 'present' ? 'selected' : ''}" data-attendance="present" data-teacher="${teacher.id}" type="button">✓ Present</button><button class="attendance-button absent ${teacher.attendance === 'absent' ? 'selected' : ''}" data-attendance="absent" data-teacher="${teacher.id}" type="button">× Absent</button><button class="open-button" data-open-teacher="${teacher.id}" type="button">Open teacher</button></div><p class="teacher-attendance-total">${teacher.absent} absences recorded</p><button class="remove-teacher" data-remove-teacher="${teacher.id}" type="button">Remove teacher</button></article>`;
   }).join('');
   document.querySelector('#teacher-count').textContent = `${teachers.length} teachers`;
 }
@@ -143,7 +143,7 @@ document.querySelectorAll('.modal-backdrop').forEach(backdrop => backdrop.addEve
 document.querySelector('#teacher-form').addEventListener('submit', async event => {
   event.preventDefault();
   const data = new FormData(event.target);
-  const { error } = await database.from('teachers').insert({ user_id: currentUser.id, name: data.get('name'), subject: data.get('subject'), room: data.get('room') || 'Room to be added', weekly_classes: 1 });
+  const { error } = await database.from('teachers').insert({ user_id: currentUser.id, name: data.get('name'), subject: data.get('subject'), room: data.get('room') || 'Room to be added', credit_hours: Number(data.get('credit_hours')), semester_classes: Number(data.get('semester_classes')), weekly_classes: 1 });
   if (error) return showToast(error.message);
   await loadData();
   closeModals();
