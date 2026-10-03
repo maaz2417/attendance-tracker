@@ -20,11 +20,19 @@ function initials(name) {
   return name.split(' ').filter(word => word.length > 2).slice(0, 2).map(word => word[0]).join('');
 }
 
+function latestAttendanceFor(teacherId) {
+  return attendance
+    .filter(item => item.teacher_id === teacherId)
+    .sort((first, second) => new Date(second.created_at) - new Date(first.created_at))[0];
+}
+
 function renderTeachers() {
   teacherGrid.innerHTML = teachers.map(teacher => {
     const classesDone = attendance.filter(item => item.teacher_id === teacher.id).length;
     const classesLeft = Math.max((teacher.semester_classes || 0) - classesDone, 0);
-    return `<article class="teacher-card"><div class="teacher-top"><div><span class="eyebrow">Teacher</span><h4>${escapeHtml(teacher.name)}</h4><p class="teacher-subject"><span>Subject</span>${escapeHtml(teacher.subject)}</p></div><span class="teacher-initial">${escapeHtml(initials(teacher.name))}</span></div><div class="teacher-stats"><div><strong>${teacher.semester_classes ?? '—'}</strong><span>Total classes</span></div><div><strong>${classesDone}</strong><span>Recorded</span></div><div><strong>${classesLeft}</strong><span>Remaining</span></div><div class="absence-stat"><strong>${teacher.absent}</strong><span>Absent</span></div></div><p class="teacher-room">⌖ ${escapeHtml(teacher.room)}</p><div class="teacher-actions"><span class="action-label">Mark today’s class</span><div class="action-buttons"><button class="attendance-button present" data-attendance="present" data-teacher="${teacher.id}" type="button">✓ Present</button><button class="attendance-button absent" data-attendance="absent" data-teacher="${teacher.id}" type="button">× Absent</button><button class="open-button" data-open-teacher="${teacher.id}" type="button">View details</button></div></div><button class="remove-teacher" data-remove-teacher="${teacher.id}" type="button">Remove teacher</button></article>`;
+    const latestAttendance = latestAttendanceFor(teacher.id);
+    const undoButton = latestAttendance ? `<button class="undo-attendance" data-undo-attendance="${latestAttendance.id}" data-teacher="${teacher.id}" type="button">Undo last mark</button>` : '';
+    return `<article class="teacher-card"><div class="teacher-top"><div><span class="eyebrow">Teacher</span><h4>${escapeHtml(teacher.name)}</h4><p class="teacher-subject"><span>Subject</span>${escapeHtml(teacher.subject)}</p></div><span class="teacher-initial">${escapeHtml(initials(teacher.name))}</span></div><div class="teacher-stats"><div><strong>${teacher.semester_classes ?? '—'}</strong><span>Total classes</span></div><div><strong>${classesDone}</strong><span>Recorded</span></div><div><strong>${classesLeft}</strong><span>Remaining</span></div><div class="absence-stat"><strong>${teacher.absent}</strong><span>Absent</span></div></div><p class="teacher-room">⌖ ${escapeHtml(teacher.room)}</p><div class="teacher-actions"><span class="action-label">Mark today’s class</span><div class="action-buttons"><button class="attendance-button present" data-attendance="present" data-teacher="${teacher.id}" type="button">✓ Present</button><button class="attendance-button absent" data-attendance="absent" data-teacher="${teacher.id}" type="button">× Absent</button><button class="open-button" data-open-teacher="${teacher.id}" type="button">View details</button></div>${undoButton}</div><button class="remove-teacher" data-remove-teacher="${teacher.id}" type="button">Remove teacher</button></article>`;
   }).join('');
   document.querySelector('#teacher-count').textContent = `${teachers.length} teachers`;
 }
@@ -81,12 +89,23 @@ async function loadData() {
 }
 
 async function setAttendance(teacher, status) {
-  const { error } = await database.from('attendance').insert({ user_id: currentUser.id, teacher_id: teacher.id, class_date: today(), status });
+  const { data: attendanceRecord, error } = await database.from('attendance').insert({ user_id: currentUser.id, teacher_id: teacher.id, class_date: today(), status }).select().single();
   if (error) return showToast(error.message);
-  attendance.push({ teacher_id: teacher.id, class_date: today(), status });
+  attendance.push(attendanceRecord);
   if (status === 'absent') teacher.absent += 1;
   renderTeachers();
   showToast(`${teacher.name}: marked ${status}.`);
+}
+
+async function undoAttendance(teacher, attendanceId) {
+  const attendanceRecord = attendance.find(item => item.id === attendanceId && item.teacher_id === teacher.id);
+  if (!attendanceRecord) return;
+  const { error } = await database.from('attendance').delete().eq('id', attendanceId);
+  if (error) return showToast(error.message);
+  attendance = attendance.filter(item => item.id !== attendanceId);
+  if (attendanceRecord.status === 'absent') teacher.absent -= 1;
+  renderTeachers();
+  showToast(`${teacher.name}: last mark undone.`);
 }
 
 async function removeTeacher(teacher) {
@@ -103,6 +122,11 @@ teacherGrid.addEventListener('click', event => {
   if (attendanceButton) {
     const teacher = teachers.find(item => item.id === attendanceButton.dataset.teacher);
     if (teacher) setAttendance(teacher, attendanceButton.dataset.attendance);
+  }
+  const undoButton = event.target.closest('[data-undo-attendance]');
+  if (undoButton) {
+    const teacher = teachers.find(item => item.id === undoButton.dataset.teacher);
+    if (teacher) undoAttendance(teacher, undoButton.dataset.undoAttendance);
   }
   const openButton = event.target.closest('[data-open-teacher]');
   if (openButton) openTeacherDetail(teachers.find(item => item.id === openButton.dataset.openTeacher));
