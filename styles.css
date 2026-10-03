@@ -67,27 +67,26 @@ button { cursor: pointer; }
 .teacher-card:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(46, 52, 64, .12); }
 .teacher-top { display: flex; align-items: start; justify-content: space-between; gap: 12px; }
 .teacher-initial { display: grid; place-items: center; width: 43px; height: 43px; border-radius: 50%; background: #eef3f7; color: #47748a; font: 700 15px Arial, sans-serif; }
-.teacher-card h4 { margin: 0; font-size: 18px; font-weight: 400; }
-.teacher-subject { margin: 3px 0 0; color: var(--muted); font-size: 13px; }
-.teacher-facts { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 17px; }
-.teacher-facts span { padding: 6px 8px; border: 1px solid var(--line); border-radius: 4px; background: #f7f9fb; color: var(--muted); font: 10px Arial, sans-serif; }
-.teacher-facts strong { color: var(--ink); font-size: 12px; }
-.class-progress { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-top: 8px; }
-.class-progress div { display: grid; gap: 2px; padding: 8px; border-left: 3px solid var(--blue); background: #f7f9fb; }
-.class-progress div:last-child { border-left-color: var(--frost); }
-.class-progress strong { color: var(--ink); font: 700 16px Arial, sans-serif; }
-.class-progress span { color: var(--muted); font: 10px Arial, sans-serif; text-transform: uppercase; }
-.absence-total { display: flex; align-items: baseline; gap: 8px; margin-top: 15px; padding: 12px 14px; border-radius: 6px; background: #fff0f1; color: #a84f59; }
-.absence-total strong { font: 700 30px Arial, sans-serif; line-height: 1; }
-.absence-total span { font: 700 11px Arial, sans-serif; letter-spacing: .8px; text-transform: uppercase; }
-.teacher-room { margin: 20px 0 0; color: var(--muted); font: 11px Arial, sans-serif; }
+.teacher-card h4 { margin: 4px 0 0; font-size: 22px; font-weight: 400; }
+.teacher-subject { display: grid; gap: 2px; margin: 10px 0 0; color: var(--ink); font-size: 14px; }
+.teacher-subject span { color: var(--muted); font: 700 10px Arial, sans-serif; letter-spacing: 1px; text-transform: uppercase; }
+.teacher-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; margin-top: 22px; }
+.teacher-stats div { display: grid; gap: 3px; min-width: 0; padding: 10px 8px; border-top: 3px solid var(--blue); background: #f7f9fb; }
+.teacher-stats div:nth-child(2) { border-top-color: var(--frost); }
+.teacher-stats div:nth-child(3) { border-top-color: var(--green); }
+.teacher-stats .absence-stat { border-top-color: var(--red); }
+.teacher-stats strong { color: var(--ink); font: 700 20px Arial, sans-serif; }
+.teacher-stats span { color: var(--muted); font: 10px Arial, sans-serif; text-transform: uppercase; }
+.teacher-room { margin: 18px 0 0; color: var(--muted); font: 11px Arial, sans-serif; }
 .class-counter { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 17px; }
 .class-counter div { display: grid; gap: 2px; padding: 9px 8px; border: 1px solid var(--line); border-radius: 5px; background: #f7f9fb; }
 .class-counter strong { color: var(--ink); font: 700 18px Arial, sans-serif; }
 .class-counter span { color: var(--muted); font: 10px Arial, sans-serif; text-transform: uppercase; letter-spacing: .5px; }
 .class-counter div:last-child strong, .class-counter div:last-child span { color: #e18b93; }
 .semester-total { margin: 9px 0 0; color: var(--muted); font: 10px Arial, sans-serif; }
-.teacher-actions { display: flex; gap: 8px; margin-top: 19px; padding-top: 15px; border-top: 1px solid var(--line); }
+.teacher-actions { margin-top: 19px; padding-top: 15px; border-top: 1px solid var(--line); }
+.action-label { display: block; margin-bottom: 8px; color: var(--muted); font: 700 10px Arial, sans-serif; letter-spacing: 1px; text-transform: uppercase; }
+.action-buttons { display: flex; gap: 8px; }
 .attendance-button, .open-button { flex: 1; border: 1px solid var(--line); border-radius: 4px; background: transparent; padding: 9px 6px; color: var(--muted); font: 700 11px Arial, sans-serif; }
 .attendance-button.present { border-color: #75965f; background: #edf5e9; color: #416136; }
 .attendance-button.present:hover, .attendance-button.present.selected { border-color: var(--green); background: #a3be8c; color: #273142; }
