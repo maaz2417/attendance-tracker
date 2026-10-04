@@ -11,6 +11,11 @@ create unique index if not exists profiles_username_lower_idx
 
 alter table public.profiles enable row level security;
 
+drop policy if exists "Users can view their own profile" on public.profiles;
+create policy "Users can view their own profile"
+on public.profiles for select
+using (auth.uid() = id);
+
 create or replace function public.handle_new_user()
 returns trigger
 language plpgsql

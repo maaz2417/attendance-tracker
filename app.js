@@ -197,8 +197,15 @@ document.querySelector('#task-form').addEventListener('submit', async event => {
 async function loadAuthenticatedApp(session) {
   currentUser = session?.user || null;
   if (!currentUser) return window.location.replace('index.html');
-  document.querySelector('#greeting').textContent = `Good morning, ${currentUser.email.split('@')[0]}.`;
   try {
+    const { data: profile, error: profileError } = await database
+      .from('profiles')
+      .select('username')
+      .eq('id', currentUser.id)
+      .maybeSingle();
+    if (profileError) throw profileError;
+    const displayName = profile?.username || currentUser.email.split('@')[0];
+    document.querySelector('#greeting').textContent = `Yo, ${displayName} — time to lock in.`;
     await loadData();
   } catch (error) {
     showToast(`Database setup is incomplete: ${error.message}`);
