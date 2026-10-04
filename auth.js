@@ -26,7 +26,10 @@ function updateAuthMode() {
   emailLabel.textContent = signingIn ? 'Email or username' : 'Email';
   usernameField.hidden = signingIn;
   usernameField.querySelector('input').required = !signingIn;
-  emailField.querySelector('input').placeholder = signingIn ? 'you@example.com or your username' : 'you@example.com';
+  const identifierInput = emailField.querySelector('input');
+  identifierInput.name = signingIn ? 'identifier' : 'email';
+  identifierInput.autocomplete = signingIn ? 'username' : 'email';
+  identifierInput.placeholder = signingIn ? 'you@example.com or your username' : 'you@example.com';
   setAuthMessage('');
 }
 
@@ -47,7 +50,7 @@ authForm.addEventListener('submit', async event => {
   const data = new FormData(event.target);
   let request;
   if (authMode === 'signin') {
-    const identifier = data.get('email').trim();
+    const identifier = data.get('identifier').trim();
     let email = identifier;
     if (!identifier.includes('@')) {
       const { data: usernameResult, error: usernameError } = await database.rpc('get_email_for_username', {
