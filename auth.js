@@ -5,6 +5,9 @@ const authTitle = document.querySelector('#auth-title');
 const authIntro = document.querySelector('#auth-intro');
 const authSubmit = document.querySelector('#auth-submit');
 const authToggle = document.querySelector('#auth-toggle');
+const emailField = document.querySelector('#email-field');
+const usernameField = document.querySelector('#username-field');
+const emailLabel = document.querySelector('#email-label');
 let authMode = 'signin';
 
 function setAuthMessage(message, success = false) {
@@ -18,6 +21,12 @@ function updateAuthMode() {
   authIntro.textContent = signingIn ? 'Sign in to keep your attendance and assignments synced.' : 'Create an account to keep your attendance and assignments synced.';
   authSubmit.textContent = signingIn ? 'Sign in' : 'Create account';
   authToggle.textContent = signingIn ? 'Create an account' : 'I already have an account';
+  emailField.hidden = false;
+  emailField.querySelector('input').required = true;
+  emailLabel.textContent = signingIn ? 'Email or username' : 'Email';
+  usernameField.hidden = signingIn;
+  usernameField.querySelector('input').required = !signingIn;
+  emailField.querySelector('input').placeholder = signingIn ? 'you@example.com or your username' : 'you@example.com';
   setAuthMessage('');
 }
 
@@ -36,9 +45,34 @@ authForm.addEventListener('submit', async event => {
   authSubmit.disabled = true;
   authSubmit.textContent = authMode === 'signin' ? 'Signing in...' : 'Creating account...';
   const data = new FormData(event.target);
-  const request = authMode === 'signin'
-    ? database.auth.signInWithPassword({ email: data.get('email'), password: data.get('password') })
-    : database.auth.signUp({ email: data.get('email'), password: data.get('password') });
+  let request;
+  if (authMode === 'signin') {
+    const identifier = data.get('email').trim();
+    let email = identifier;
+    if (!identifier.includes('@')) {
+      const { data: usernameResult, error: usernameError } = await database.rpc('get_email_for_username', {
+        requested_username: identifier
+      });
+      if (usernameError) {
+        authSubmit.disabled = false;
+        updateAuthMode();
+        return setAuthMessage(usernameError.message);
+      }
+      if (!usernameResult) {
+        authSubmit.disabled = false;
+        updateAuthMode();
+        return setAuthMessage('No account was found for that username.');
+      }
+      email = usernameResult;
+    }
+    request = database.auth.signInWithPassword({ email, password: data.get('password') });
+  } else {
+    request = database.auth.signUp({
+      email: data.get('email'),
+      password: data.get('password'),
+      options: { data: { username: data.get('username').trim() } }
+    });
+  }
   const { data: result, error } = await request;
   authSubmit.disabled = false;
   if (error) {

@@ -16,6 +16,8 @@ The project proposal, requirements, system design, data model, use cases, testin
 
 The browser uses only Supabase's publishable key. Never put a `service_role` key in this repository. Row Level Security is enabled by the schema so each account can only access its own teachers, tasks, and attendance.
 
+New accounts must choose a unique username (3-30 letters, numbers, or underscores). The login form accepts either that username or the account email. If this project was already configured in Supabase, rerun the full `supabase-schema.sql` file so the profiles table, signup trigger, and username lookup function are created.
+
 ## Deployment
 
 This is a static site and can be deployed directly from GitHub with Netlify or Vercel. Use the repository root as the publish directory and leave the build command empty. After deployment, add the public site URL to Supabase's authentication URL configuration, then optionally connect a custom domain through the hosting provider.

@@ -26,6 +26,7 @@ button { cursor: pointer; }
 .auth-intro { margin: 0 0 25px; color: var(--muted); }
 .auth-form { display: grid; gap: 15px; }
 .auth-form label { display: grid; gap: 6px; color: var(--muted); font: 11px Arial, sans-serif; }
+.auth-form label[hidden] { display: none; }
 .auth-form input { width: 100%; border: 1px solid var(--line); border-radius: 4px; padding: 12px; color: var(--ink); background: #ffffff; }
 .auth-form .primary-button { width: 100%; margin-top: 5px; }
 .auth-toggle { margin-top: 18px; padding: 0; }

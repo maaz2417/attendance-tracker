@@ -21,6 +21,7 @@ User 1---* Semester 1---* Subject *---1 Teacher
 | email | Sign-in identity |
 | display_name | Name shown in the application |
 | created_at | Creation timestamp |
+| username | Unique username that can also be used to sign in |
 
 ### Semester
 

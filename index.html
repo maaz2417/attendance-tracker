@@ -16,7 +16,8 @@
         <h2 id="auth-title">Welcome back.</h2>
         <p class="auth-intro" id="auth-intro">Sign in to keep your attendance and assignments synced.</p>
         <form id="auth-form" class="auth-form" method="post" action="/">
-          <label>Email<input name="email" type="email" autocomplete="email" required placeholder="you@example.com" /></label>
+          <label id="email-field"><span id="email-label">Email</span><input name="email" type="text" autocomplete="email" required placeholder="you@example.com" /></label>
+          <label id="username-field" hidden>Username<input name="username" type="text" autocomplete="username" minlength="3" maxlength="30" pattern="[A-Za-z0-9_]+" placeholder="e.g. maaz_2417" /></label>
           <label>Password<input name="password" type="password" autocomplete="current-password" minlength="6" required placeholder="At least 6 characters" /></label>
           <button class="primary-button" id="auth-submit" type="submit">Sign in</button>
         </form>
