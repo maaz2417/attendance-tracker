@@ -49,6 +49,10 @@ button { cursor: pointer; }
 
 .content { width: min(100%, 1280px); margin: 0 auto; padding: 38px clamp(25px, 5vw, 75px) 70px; }
 .topbar, .page-heading, .section-heading { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.topbar-actions { display: flex; align-items: center; gap: 22px; }
+.page-nav { display: flex; align-items: center; gap: 5px; }
+.page-nav .nav-link { padding: 8px 11px; border-radius: 5px; color: var(--muted); font: 700 11px Arial, sans-serif; text-decoration: none; }
+.page-nav .nav-link:hover, .page-nav .nav-link.active { background: #eef3f7; color: var(--ink); }
 .topbar .brand-wordmark { margin-bottom: 8px; font-size: clamp(32px, 4vw, 48px); }
 .topbar h1 { margin: 0; font-size: clamp(24px, 3vw, 32px); letter-spacing: -.8px; }
 .eyebrow { display: block; color: var(--muted); font: 700 10px Arial, sans-serif; letter-spacing: 1.3px; text-transform: uppercase; }
@@ -110,6 +114,18 @@ button { cursor: pointer; }
 .task-due { color: var(--red); font: 11px Arial, sans-serif; }
 .delete-task { display: grid; width: 30px; height: 30px; place-items: center; border: 1px solid #f0c8cc; border-radius: 5px; background: #fff5f6; color: var(--red); font-size: 17px; line-height: 1; }
 .delete-task:hover { border-color: var(--red); background: var(--red); color: #ffffff; }
+.empty-state { display: grid; gap: 4px; padding: 30px 4px; border-bottom: 1px solid var(--line); color: var(--muted); }
+.empty-state strong { color: var(--ink); font-size: 16px; font-weight: 400; }
+.empty-state span { font: 12px Arial, sans-serif; }
+.assignment-heading { margin-bottom: 35px; }
+.page-intro { max-width: 470px; margin: 14px 0 0; color: var(--muted); }
+.assignment-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 680px; padding: 16px; border: 1px solid var(--line); border-radius: 8px; background: #f7f9fb; }
+.assignment-summary div { display: grid; gap: 3px; padding: 4px 16px; border-left: 3px solid var(--blue); }
+.assignment-summary div:nth-child(2) { border-left-color: var(--green); }
+.assignment-summary div:nth-child(3) { border-left-color: var(--red); }
+.assignment-summary strong { font: 700 25px Arial, sans-serif; }
+.assignment-summary span { color: var(--muted); font: 10px Arial, sans-serif; letter-spacing: .8px; text-transform: uppercase; }
+.assignment-section { margin-top: 48px; max-width: 920px; }
 
 .modal-backdrop { position: fixed; inset: 0; display: grid; place-items: center; padding: 20px; background: rgba(39, 49, 66, .35); z-index: 5; }
 .modal-backdrop[hidden] { display: none; }
@@ -133,6 +149,8 @@ button { cursor: pointer; }
   .nav-link { padding: 8px 11px; font-size: 13px; }
   .semester-card, .sidebar-note { display: none; }
   .content { padding: 27px 20px 50px; }
+  .topbar-actions { gap: 8px; }
+  .page-nav .nav-link { padding: 7px 8px; }
   .page-heading { margin-top: 48px; }
   .teacher-grid { grid-template-columns: 1fr; }
   .section-block { margin-top: 42px; }
@@ -141,12 +159,16 @@ button { cursor: pointer; }
 @media (max-width: 560px) {
   .section-heading { align-items: flex-start; flex-direction: column; gap: 10px; }
   .section-actions { width: 100%; justify-content: space-between; }
+  .assignment-summary { width: 100%; }
 }
 
 @media (max-width: 430px) {
   .auth-panel { padding: 28px 22px; }
   .topbar .brand-wordmark { font-size: 35px; }
   .topbar h1 { font-size: 23px; }
+  .topbar { align-items: flex-start; }
+  .topbar-actions { align-items: flex-end; flex-direction: column-reverse; gap: 10px; }
+  .page-nav .nav-link { font-size: 10px; }
   .page-heading { align-items: start; flex-direction: column; gap: 18px; }
   .page-heading h2 { font-size: 41px; }
   .quiet-button { width: 100%; }
@@ -159,4 +181,7 @@ button { cursor: pointer; }
   .teacher-stats div { padding: 5px 4px; }
   .teacher-stats strong { font-size: 16px; }
   .attendance-button, .open-button { min-width: 29%; }
+  .assignment-summary { gap: 4px; padding: 12px 8px; }
+  .assignment-summary div { padding: 4px 8px; }
+  .assignment-summary strong { font-size: 21px; }
 }

@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Assignments | BunkBalance</title>
+    <link rel="icon" type="image/png" href="favicon/logo.png" />
+    <link rel="stylesheet" href="styles.css?v=3" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js?v=2"></script>
+    <script src="assignments.js?v=1" defer></script>
+  </head>
+  <body>
+    <main class="app-shell ready">
+      <section class="content assignments-page">
+        <header class="topbar"><div><div class="brand-wordmark">BunkBalance</div><h1 id="greeting">Your assignments.</h1></div><div class="topbar-actions"><nav class="page-nav" aria-label="Main navigation"><a class="nav-link" href="dashboard.html">Overview</a><a class="nav-link active" href="assignments.html">Assignments</a></nav><button class="avatar" id="logout-button" type="button" aria-label="Sign out">M</button></div></header>
+        <div class="page-heading assignment-heading"><div><span class="eyebrow">One place for every deadline</span><h2>Stay ahead of the work.</h2><p class="page-intro">Keep your upcoming submissions visible, sorted, and easy to clear.</p></div><button class="quiet-button" id="add-task-button" type="button"><span>+</span> Add assignment</button></div>
+        <section class="assignment-summary" aria-label="Assignment summary"><div><strong id="upcoming-count">0</strong><span>Upcoming</span></div><div><strong id="completed-count">0</strong><span>Completed</span></div><div><strong id="week-count">0</strong><span>Due this week</span></div></section>
+        <section class="section-block assignment-section"><div class="section-heading"><div><span class="eyebrow">Your workload</span><h3>All assignments</h3></div><span class="section-count" id="task-count">0 assignments</span></div><div class="task-list assignment-list" id="task-list"></div></section>
+      </section>
+    </main>
+    <div class="modal-backdrop" id="task-modal" hidden><form class="modal" id="task-form"><button class="modal-close" type="button" data-close-modal aria-label="Close">×</button><span class="eyebrow">New reminder</span><h2>Add an assignment</h2><label>Task<input name="title" required placeholder="e.g. Submit lab report" /></label><label>Teacher<select name="teacher" id="task-teacher-select"></select></label><label>Due date<input name="due" type="date" required /></label><button class="primary-button" type="submit">Add assignment</button></form></div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>

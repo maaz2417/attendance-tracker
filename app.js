@@ -43,7 +43,10 @@ function formatDate(date) {
 }
 
 function renderTasks() {
-  taskList.innerHTML = tasks.map(task => `<div class="task-row"><input class="task-check" type="checkbox" data-task="${task.id}" ${task.done ? 'checked' : ''} /><span><p class="task-title ${task.done ? 'done' : ''}">${escapeHtml(task.title)}</p><p class="task-meta"><strong>${escapeHtml(task.teacher)}</strong><span>${escapeHtml(task.subject)}</span></p></span><span class="task-due">Due ${formatDate(task.due)}</span><button class="delete-task" type="button" data-delete-task="${task.id}" aria-label="Delete ${escapeHtml(task.title)}" title="Delete assignment">🗑</button></div>`).join('');
+  const visibleTasks = tasks.filter(task => !task.done).slice(0, 4);
+  taskList.innerHTML = visibleTasks.length
+    ? visibleTasks.map(task => `<div class="task-row"><input class="task-check" type="checkbox" data-task="${task.id}" ${task.done ? 'checked' : ''} /><span><p class="task-title ${task.done ? 'done' : ''}">${escapeHtml(task.title)}</p><p class="task-meta"><strong>${escapeHtml(task.teacher)}</strong><span>${escapeHtml(task.subject)}</span></p></span><span class="task-due">Due ${formatDate(task.due)}</span><button class="delete-task" type="button" data-delete-task="${task.id}" aria-label="Delete ${escapeHtml(task.title)}" title="Delete assignment">🗑</button></div>`).join('')
+    : '<div class="empty-state"><strong>Your desk is clear.</strong><span>Open assignments to add a new deadline.</span></div>';
   document.querySelector('#task-count').textContent = `${tasks.filter(task => !task.done).length} remaining`;
 }
 
