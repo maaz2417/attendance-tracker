@@ -1,11 +1,9 @@
 const database = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_PUBLISHABLE_KEY);
 let currentUser;
 let teachers = [];
-let tasks = [];
 let attendance = [];
 
 const teacherGrid = document.querySelector('#teacher-grid');
-const taskList = document.querySelector('#task-list');
 const toast = document.querySelector('#toast');
 
 function escapeHtml(value) {
@@ -38,18 +36,6 @@ function renderTeachers() {
   document.querySelector('#teacher-count').textContent = `${teachers.length} teachers`;
 }
 
-function formatDate(date) {
-  return new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric' }).format(new Date(`${date}T12:00:00`));
-}
-
-function renderTasks() {
-  const visibleTasks = tasks.filter(task => !task.done).slice(0, 4);
-  taskList.innerHTML = visibleTasks.length
-    ? visibleTasks.map(task => `<div class="task-row"><input class="task-check" type="checkbox" data-task="${task.id}" ${task.done ? 'checked' : ''} /><span><p class="task-title ${task.done ? 'done' : ''}">${escapeHtml(task.title)}</p><p class="task-meta"><strong>${escapeHtml(task.teacher)}</strong><span>${escapeHtml(task.subject)}</span></p></span><span class="task-due">Due ${formatDate(task.due)}</span><button class="delete-task" type="button" data-delete-task="${task.id}" aria-label="Delete ${escapeHtml(task.title)}" title="Delete assignment">🗑</button></div>`).join('')
-    : '<div class="empty-state"><strong>Your desk is clear.</strong><span>Open assignments to add a new deadline.</span></div>';
-  document.querySelector('#task-count').textContent = `${tasks.filter(task => !task.done).length} remaining`;
-}
-
 function showToast(message) {
   toast.textContent = message;
   toast.classList.add('show');
@@ -75,20 +61,17 @@ function openTeacherDetail(teacher) {
 }
 
 async function loadData() {
-  const [{ data: teacherRows, error: teacherError }, { data: taskRows, error: taskError }, { data: attendanceRows, error: attendanceError }] = await Promise.all([
+  const [{ data: teacherRows, error: teacherError }, { data: attendanceRows, error: attendanceError }] = await Promise.all([
     database.from('teachers').select('*').order('created_at'),
-    database.from('tasks').select('*, teachers(name, subject)').order('due'),
     database.from('attendance').select('*'),
   ]);
-  if (teacherError || taskError || attendanceError) throw teacherError || taskError || attendanceError;
+  if (teacherError || attendanceError) throw teacherError || attendanceError;
   attendance = attendanceRows || [];
   teachers = (teacherRows || []).map(teacher => ({
     ...teacher,
     weeklyClasses: teacher.weekly_classes,
   }));
-  tasks = (taskRows || []).map(task => ({ ...task, done: task.completed, teacher: task.teachers?.name || 'Unassigned', subject: task.teachers?.subject || '' }));
   renderTeachers();
-  renderTasks();
 }
 
 async function setAttendance(teacher, status) {
@@ -140,36 +123,7 @@ document.querySelectorAll('#detail-present, #detail-absent').forEach(button => b
   if (teacher) setAttendance(teacher, event.currentTarget.id === 'detail-present' ? 'present' : 'absent');
 }));
 
-document.querySelector('#detail-add-task').addEventListener('click', () => { closeModals(); document.querySelector('#add-task-button').click(); });
-
-taskList.addEventListener('change', async event => {
-  const task = tasks.find(item => item.id === event.target.dataset.task);
-  if (!task) return;
-  const completed = event.target.checked;
-  const { error } = await database.from('tasks').update({ completed }).eq('id', task.id);
-  if (error) return showToast(error.message);
-  task.done = completed;
-  renderTasks();
-  showToast(task.done ? 'Task completed.' : 'Task moved back to upcoming.');
-});
-
-taskList.addEventListener('click', async event => {
-  const deleteButton = event.target.closest('[data-delete-task]');
-  if (!deleteButton) return;
-  const task = tasks.find(item => item.id === deleteButton.dataset.deleteTask);
-  if (!task) return;
-  const { error } = await database.from('tasks').delete().eq('id', task.id);
-  if (error) return showToast(error.message);
-  tasks = tasks.filter(item => item.id !== task.id);
-  renderTasks();
-  showToast('Assignment removed.');
-});
-
 document.querySelector('#add-teacher-button').addEventListener('click', () => openModal('#teacher-modal'));
-document.querySelector('#add-task-button').addEventListener('click', () => {
-  document.querySelector('#task-teacher-select').innerHTML = teachers.map(teacher => `<option value="${teacher.id}">${escapeHtml(teacher.name)} · ${escapeHtml(teacher.subject)}</option>`).join('');
-  openModal('#task-modal');
-});
 document.querySelectorAll('[data-close-modal]').forEach(button => button.addEventListener('click', closeModals));
 document.querySelectorAll('.modal-backdrop').forEach(backdrop => backdrop.addEventListener('click', event => { if (event.target === backdrop) closeModals(); }));
 
@@ -182,17 +136,6 @@ document.querySelector('#teacher-form').addEventListener('submit', async event =
   closeModals();
   event.target.reset();
   showToast('Teacher added to your semester.');
-});
-
-document.querySelector('#task-form').addEventListener('submit', async event => {
-  event.preventDefault();
-  const data = new FormData(event.target);
-  const { error } = await database.from('tasks').insert({ user_id: currentUser.id, teacher_id: data.get('teacher'), title: data.get('title'), due: data.get('due'), completed: false });
-  if (error) return showToast(error.message);
-  await loadData();
-  closeModals();
-  event.target.reset();
-  showToast('Assignment added to your list.');
 });
 
 async function loadAuthenticatedApp(session) {
