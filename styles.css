@@ -63,6 +63,18 @@ button { cursor: pointer; }
 .profile-menu-panel[hidden] { display: none; }
 .profile-menu-item { width: 100%; border: 0; border-radius: 4px; background: transparent; padding: 9px 11px; color: var(--ink); text-align: left; font: 700 12px Arial, sans-serif; }
 .profile-menu-item:hover, .profile-menu-item:focus-visible { background: #eef3f7; }
+.dark-mode { --ink: #eceff4; --muted: #d8dee9; --line: #4c566a; --cream: #2e3440; --paper: #3b4252; --frost: #88c0d0; --blue: #81a1c1; --green: #a3be8c; --red: #bf616a; }
+.dark-mode .auth-screen, .dark-mode .auth-panel, .dark-mode .sidebar, .dark-mode .teacher-card, .dark-mode .modal, .dark-mode .profile-menu-panel { background: var(--paper); }
+.dark-mode .auth-screen, .dark-mode .teacher-stats div, .dark-mode .class-counter div, .dark-mode .nav-link.active, .dark-mode .nav-link:hover, .dark-mode .page-nav .nav-link.active, .dark-mode .page-nav .nav-link:hover, .dark-mode .open-button, .dark-mode .profile-menu-item:hover, .dark-mode .profile-menu-item:focus-visible, .dark-mode .teacher-initial { background: #434c5e; }
+.dark-mode .auth-form input, .dark-mode .teacher-stats div, .dark-mode .class-counter div { background: #434c5e; color: var(--ink); }
+.dark-mode .auth-form input::placeholder { color: var(--muted); }
+.dark-mode .auth-panel, .dark-mode .teacher-card { box-shadow: 0 18px 50px rgba(0, 0, 0, .18); }
+.dark-mode .teacher-stats div, .dark-mode .class-counter div, .dark-mode .assignment-summary { background: #434c5e; }
+.dark-mode .teacher-initial { color: #8fbcbb; }
+.dark-mode .assignment-summary, .dark-mode .task-row { background: #3b4252; }
+.dark-mode .task-row { border-color: var(--line); }
+.dark-mode .modal input, .dark-mode .modal select { background: #434c5e; color: var(--ink); }
+.dark-mode .delete-task { border-color: #70474f; background: #4b3037; }
 .page-heading { margin: 68px 0 27px; align-items: end; }
 .page-heading h2 { margin: 4px 0 0; font-size: clamp(31px, 5vw, 52px); line-height: 1; letter-spacing: -2px; font-weight: 400; }
 .quiet-button, .primary-button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 0; border-radius: 5px; background: var(--blue); color: #ffffff; padding: 11px 15px; font: 700 12px Arial, sans-serif; }

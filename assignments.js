@@ -97,6 +97,22 @@ document.querySelector('#task-form').addEventListener('submit', async event => {
 
 const profileMenuButton = document.querySelector('#profile-menu-button');
 const profileMenu = document.querySelector('#profile-menu');
+const themeToggle = document.querySelector('#theme-toggle');
+const darkModeStorageKey = 'bunkbalance-dark-mode';
+
+function setDarkMode(enabled) {
+  document.body.classList.toggle('dark-mode', enabled);
+  themeToggle.textContent = enabled ? 'Turn off dark mode' : 'Turn on dark mode';
+  themeToggle.setAttribute('aria-pressed', String(enabled));
+}
+
+setDarkMode(localStorage.getItem(darkModeStorageKey) === 'true');
+
+themeToggle.addEventListener('click', () => {
+  const enabled = !document.body.classList.contains('dark-mode');
+  localStorage.setItem(darkModeStorageKey, String(enabled));
+  setDarkMode(enabled);
+});
 
 function closeProfileMenu() {
   profileMenu.hidden = true;
