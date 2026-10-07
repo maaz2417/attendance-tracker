@@ -156,6 +156,27 @@ async function loadAuthenticatedApp(session) {
   }
 }
 
+const profileMenuButton = document.querySelector('#profile-menu-button');
+const profileMenu = document.querySelector('#profile-menu');
+
+function closeProfileMenu() {
+  profileMenu.hidden = true;
+  profileMenuButton.setAttribute('aria-expanded', 'false');
+}
+
+profileMenuButton.addEventListener('click', () => {
+  profileMenu.hidden = !profileMenu.hidden;
+  profileMenuButton.setAttribute('aria-expanded', String(!profileMenu.hidden));
+});
+
+document.addEventListener('click', event => {
+  if (!event.target.closest('.profile-menu')) closeProfileMenu();
+});
+
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape') closeProfileMenu();
+});
+
 document.querySelector('#logout-button').addEventListener('click', async () => {
   await database.auth.signOut();
   window.location.replace('index.html');

@@ -56,7 +56,13 @@ button { cursor: pointer; }
 .topbar .brand-wordmark { margin-bottom: 8px; font-size: clamp(32px, 4vw, 48px); }
 .topbar h1 { margin: 0; font-size: clamp(24px, 3vw, 32px); letter-spacing: -.8px; }
 .eyebrow { display: block; color: var(--muted); font: 700 10px Arial, sans-serif; letter-spacing: 1.3px; text-transform: uppercase; }
+.profile-menu { position: relative; }
 .avatar { width: 38px; height: 38px; border: 0; border-radius: 50%; background: var(--frost); color: var(--ink); font: 700 14px Arial, sans-serif; }
+.avatar:hover, .avatar:focus-visible { background: var(--blue); color: #ffffff; }
+.profile-menu-panel { position: absolute; top: calc(100% + 8px); right: 0; min-width: 125px; padding: 5px; border: 1px solid var(--line); border-radius: 6px; background: var(--paper); box-shadow: 0 10px 25px rgba(39, 49, 66, .14); z-index: 2; }
+.profile-menu-panel[hidden] { display: none; }
+.profile-menu-item { width: 100%; border: 0; border-radius: 4px; background: transparent; padding: 9px 11px; color: var(--ink); text-align: left; font: 700 12px Arial, sans-serif; }
+.profile-menu-item:hover, .profile-menu-item:focus-visible { background: #eef3f7; }
 .page-heading { margin: 68px 0 27px; align-items: end; }
 .page-heading h2 { margin: 4px 0 0; font-size: clamp(31px, 5vw, 52px); line-height: 1; letter-spacing: -2px; font-weight: 400; }
 .quiet-button, .primary-button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 0; border-radius: 5px; background: var(--blue); color: #ffffff; padding: 11px 15px; font: 700 12px Arial, sans-serif; }
