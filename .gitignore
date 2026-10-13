@@ -1,0 +1,33 @@
+# Supabase Local Configuration (Contains real credentials)
+supabase-config.js
+
+# Environment Variables
+.env
+.env.*
+*.env
+!.env.example
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor & IDE Directories
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Build and Node artifacts
+node_modules/
+dist/
+build/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Antigravity artifacts
+scratch/

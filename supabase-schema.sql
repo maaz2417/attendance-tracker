@@ -33,20 +33,8 @@ create trigger on_auth_user_created
   after insert on auth.users
   for each row execute procedure public.handle_new_user();
 
-create or replace function public.get_email_for_username(requested_username text)
-returns text
-language sql
-security definer set search_path = public
-as $$
-  select auth_users.email
-  from auth.users as auth_users
-  join public.profiles on public.profiles.id = auth_users.id
-  where lower(public.profiles.username) = lower(trim(requested_username))
-  limit 1;
-$$;
-
-revoke all on function public.get_email_for_username(text) from public;
-grant execute on function public.get_email_for_username(text) to anon, authenticated;
+-- Drop legacy username-to-email lookup function if it exists (prevents email harvesting)
+drop function if exists public.get_email_for_username(text);
 
 create table if not exists public.teachers (
   id uuid primary key default gen_random_uuid(),

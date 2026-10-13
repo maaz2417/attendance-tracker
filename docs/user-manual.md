@@ -4,7 +4,7 @@ This manual describes the planned MVP workflow.
 
 ## Getting started
 
-1. Create an account with a unique username, or sign in using either your username or email address.
+1. Create an account with your email, password, and chosen username, or sign in using your account email and password.
 2. Create or select the active semester.
 3. Add teachers and subjects.
 4. Enter each subject's credit hours, attendance threshold, and weekly schedule.

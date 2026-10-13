@@ -1,4 +1,14 @@
-const database = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_PUBLISHABLE_KEY);
+function isConfigured() {
+  return typeof window.SUPABASE_URL === 'string' &&
+    typeof window.SUPABASE_PUBLISHABLE_KEY === 'string' &&
+    window.SUPABASE_URL.startsWith('https://') &&
+    !window.SUPABASE_URL.includes('YOUR-PROJECT') &&
+    !window.SUPABASE_PUBLISHABLE_KEY.includes('YOUR-PUBLISHABLE');
+}
+
+const database = isConfigured() && window.supabase
+  ? window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_PUBLISHABLE_KEY)
+  : null;
 let currentUser;
 let teachers = [];
 let tasks = [];
@@ -133,19 +143,26 @@ document.addEventListener('keydown', event => {
 });
 
 document.querySelector('#logout-button').addEventListener('click', async () => {
-  await database.auth.signOut();
+  if (database) await database.auth.signOut();
   window.location.replace('index.html');
 });
 
-database.auth.getSession().then(async ({ data }) => {
-  currentUser = data.session?.user;
-  if (!currentUser) return window.location.replace('index.html');
-  try {
-    const { data: profile, error } = await database.from('profiles').select('username').eq('id', currentUser.id).maybeSingle();
-    if (error) throw error;
-    document.querySelector('#greeting').textContent = `${profile?.username || currentUser.email.split('@')[0]}'s assignments.`;
-    await loadData();
-  } catch (error) {
-    showToast(`Database setup is incomplete: ${error.message}`);
-  }
-});
+if (!database) {
+  window.location.replace('index.html');
+} else {
+  database.auth.getSession().then(async ({ data }) => {
+    currentUser = data.session?.user;
+    if (!currentUser) return window.location.replace('index.html');
+    try {
+      const { data: profile, error } = await database.from('profiles').select('username').eq('id', currentUser.id).maybeSingle();
+      if (error) throw error;
+      const displayName = profile?.username || currentUser.email.split('@')[0];
+      document.querySelector('#greeting').textContent = `${displayName}'s assignments.`;
+      const avatarInitial = displayName ? displayName.trim()[0].toUpperCase() : 'U';
+      if (profileMenuButton) profileMenuButton.textContent = avatarInitial;
+      await loadData();
+    } catch (error) {
+      showToast(`Database setup is incomplete: ${error.message}`);
+    }
+  });
+}

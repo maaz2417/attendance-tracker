@@ -1,4 +1,15 @@
-const database = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_PUBLISHABLE_KEY);
+function isConfigured() {
+  return typeof window.SUPABASE_URL === 'string' &&
+    typeof window.SUPABASE_PUBLISHABLE_KEY === 'string' &&
+    window.SUPABASE_URL.startsWith('https://') &&
+    !window.SUPABASE_URL.includes('YOUR-PROJECT') &&
+    !window.SUPABASE_PUBLISHABLE_KEY.includes('YOUR-PUBLISHABLE');
+}
+
+const database = isConfigured() && window.supabase
+  ? window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_PUBLISHABLE_KEY)
+  : null;
+
 const authForm = document.querySelector('#auth-form');
 const authMessage = document.querySelector('#auth-message');
 const authTitle = document.querySelector('#auth-title');
@@ -23,18 +34,20 @@ function updateAuthMode() {
   authToggle.textContent = signingIn ? 'Create an account' : 'I already have an account';
   emailField.hidden = false;
   emailField.querySelector('input').required = true;
-  emailLabel.textContent = signingIn ? 'Email or username' : 'Email';
+  emailLabel.textContent = 'Email';
   usernameField.hidden = signingIn;
   usernameField.querySelector('input').required = !signingIn;
-  const identifierInput = emailField.querySelector('input');
-  identifierInput.name = signingIn ? 'identifier' : 'email';
-  identifierInput.autocomplete = signingIn ? 'username' : 'email';
-  identifierInput.placeholder = signingIn ? 'you@example.com or your username' : 'you@example.com';
-  setAuthMessage('');
-}
+  const emailInput = emailField.querySelector('input');
+  emailInput.name = 'email';
+  emailInput.type = 'email';
+  emailInput.autocomplete = 'email';
+  emailInput.placeholder = 'you@example.com';
 
-function isConfigured() {
-  return !window.SUPABASE_URL.includes('YOUR-PROJECT') && !window.SUPABASE_PUBLISHABLE_KEY.includes('YOUR-PUBLISHABLE');
+  if (!isConfigured()) {
+    setAuthMessage('Supabase setup required: Copy supabase-config.example.js to supabase-config.js and set your project credentials.');
+  } else {
+    setAuthMessage('');
+  }
 }
 
 authToggle.addEventListener('click', () => {
@@ -44,34 +57,19 @@ authToggle.addEventListener('click', () => {
 
 authForm.addEventListener('submit', async event => {
   event.preventDefault();
-  if (!isConfigured()) return setAuthMessage('Add your Supabase URL and publishable key in supabase-config.js.');
+  if (!isConfigured() || !database) {
+    return setAuthMessage('Supabase setup required: Copy supabase-config.example.js to supabase-config.js and set your project credentials.');
+  }
   authSubmit.disabled = true;
   authSubmit.textContent = authMode === 'signin' ? 'Signing in...' : 'Creating account...';
   const data = new FormData(event.target);
   let request;
   if (authMode === 'signin') {
-    const identifier = data.get('identifier').trim();
-    let email = identifier;
-    if (!identifier.includes('@')) {
-      const { data: usernameResult, error: usernameError } = await database.rpc('get_email_for_username', {
-        requested_username: identifier
-      });
-      if (usernameError) {
-        authSubmit.disabled = false;
-        updateAuthMode();
-        return setAuthMessage(usernameError.message);
-      }
-      if (!usernameResult) {
-        authSubmit.disabled = false;
-        updateAuthMode();
-        return setAuthMessage('No account was found for that username.');
-      }
-      email = usernameResult;
-    }
+    const email = data.get('email').trim();
     request = database.auth.signInWithPassword({ email, password: data.get('password') });
   } else {
     request = database.auth.signUp({
-      email: data.get('email'),
+      email: data.get('email').trim(),
       password: data.get('password'),
       options: { data: { username: data.get('username').trim() } }
     });
@@ -86,8 +84,10 @@ authForm.addEventListener('submit', async event => {
   window.location.replace('dashboard.html');
 });
 
-database.auth.getSession().then(({ data }) => {
-  if (data.session) window.location.replace('dashboard.html');
-});
+if (database) {
+  database.auth.getSession().then(({ data }) => {
+    if (data?.session) window.location.replace('dashboard.html');
+  });
+}
 
 updateAuthMode();

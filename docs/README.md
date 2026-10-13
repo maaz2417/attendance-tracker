@@ -21,4 +21,4 @@ The MVP is a mobile-first web application for one authenticated university stude
 
 ## Status
 
-The repository currently contains a static HTML/CSS prototype. These documents describe the target MVP and provide the implementation contract for the next development phase.
+The MVP is implemented as a mobile-first web application backed by Supabase authentication, database persistence, and a Nord dark mode interface. These documents describe the target architecture and specifications.
