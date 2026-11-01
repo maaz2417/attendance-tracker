@@ -72,10 +72,21 @@ async function loadAuthenticatedApp(session) {
 
       const totalRecorded = attendance ? attendance.length : 0;
       const totalPresent = attendance ? attendance.filter(a => a.status === 'present').length : 0;
+      const totalAbsent = attendance ? attendance.filter(a => a.status === 'absent').length : 0;
+
       const attRateEl = document.querySelector('#stat-attendance-rate');
       if (attRateEl) {
         attRateEl.textContent = totalRecorded > 0 ? `${Math.round((totalPresent / totalRecorded) * 100)}%` : '100%';
       }
+
+      const totalPresentEl = document.querySelector('#stat-total-present');
+      if (totalPresentEl) totalPresentEl.textContent = totalPresent;
+
+      const totalAbsentEl = document.querySelector('#stat-total-absent');
+      if (totalAbsentEl) totalAbsentEl.textContent = totalAbsent;
+
+      const totalRecordedEl = document.querySelector('#stat-total-classes');
+      if (totalRecordedEl) totalRecordedEl.textContent = totalRecorded;
     }
 
     if (!taskErr && tasks) {
@@ -147,3 +158,4 @@ if (!database) {
 } else {
   database.auth.getSession().then(({ data }) => loadAuthenticatedApp(data?.session));
 }
+

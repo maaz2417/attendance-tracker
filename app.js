@@ -35,6 +35,21 @@ function latestAttendanceFor(teacherId) {
 }
 
 function renderTeachers() {
+  const totalRecorded = attendance.length;
+  const totalPresent = attendance.filter(item => item.status === 'present').length;
+  const totalAbsent = attendance.filter(item => item.status === 'absent').length;
+
+  const summaryTotalEl = document.querySelector('#summary-total-classes');
+  if (summaryTotalEl) summaryTotalEl.textContent = totalRecorded;
+  const summaryPresentEl = document.querySelector('#summary-present-classes');
+  if (summaryPresentEl) summaryPresentEl.textContent = totalPresent;
+  const summaryAbsentEl = document.querySelector('#summary-absent-classes');
+  if (summaryAbsentEl) summaryAbsentEl.textContent = totalAbsent;
+  const summaryRateEl = document.querySelector('#summary-attendance-rate');
+  if (summaryRateEl) {
+    summaryRateEl.textContent = totalRecorded > 0 ? `${Math.round((totalPresent / totalRecorded) * 100)}%` : '100%';
+  }
+
   teacherGrid.innerHTML = teachers.map(teacher => {
     const classesDone = attendance.filter(item => item.teacher_id === teacher.id).length;
     const absences = attendance.filter(item => item.teacher_id === teacher.id && item.status === 'absent').length;
