@@ -95,11 +95,12 @@ button { cursor: pointer; }
 .teacher-card h4 { margin: 3px 0 0; font-size: 20px; font-weight: 400; }
 .teacher-subject { display: grid; gap: 2px; margin: 6px 0 0; color: var(--ink); font-size: 13px; }
 .teacher-subject span { color: var(--muted); font: 700 10px Arial, sans-serif; letter-spacing: 1px; text-transform: uppercase; }
-.teacher-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin-top: 13px; }
+.teacher-stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; margin-top: 13px; }
 .teacher-stats div { display: grid; gap: 2px; min-width: 0; padding: 6px 5px; border-top: 3px solid var(--blue); background: #f7f9fb; }
 .teacher-stats div:nth-child(2) { border-top-color: var(--frost); }
-.teacher-stats div:nth-child(3) { border-top-color: var(--green); }
+.teacher-stats .present-stat { border-top-color: var(--green); }
 .teacher-stats .absence-stat { border-top-color: var(--red); }
+.teacher-stats div:last-child { border-top-color: var(--blue); }
 .teacher-stats strong { color: var(--ink); font: 700 17px Arial, sans-serif; }
 .teacher-stats span { color: var(--muted); font: 10px Arial, sans-serif; text-transform: uppercase; }
 .teacher-room { margin: 11px 0 0; color: var(--muted); font: 11px Arial, sans-serif; }
