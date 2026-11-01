@@ -3,21 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BunkBalance | Attendance Tracker</title>
+    <title>Attendance | BunkBalance</title>
     <link rel="icon" type="image/png" href="favicon/logo.png" />
-    <link rel="stylesheet" href="styles.css?v=5" />
+    <link rel="stylesheet" href="styles.css?v=6" />
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase-config.js?v=2"></script>
-    <script src="app.js?v=15" defer></script>
+    <script src="app.js?v=16" defer></script>
   </head>
   <body>
     <main class="app-shell ready">
       <aside class="sidebar" aria-label="Sidebar navigation">
-        <a class="brand" href="attendance.html" aria-label="BunkBalance home">
+        <a class="brand" href="dashboard.html" aria-label="BunkBalance home">
           <span class="brand-mark">B</span>
           <span class="sidebar-wordmark">BunkBalance</span>
         </a>
         <nav class="main-nav" aria-label="Side menu">
+          <a class="nav-link" href="dashboard.html"><span class="nav-icon">⌂</span>Home</a>
           <a class="nav-link active" href="attendance.html"><span class="nav-icon">◎</span>Attendance</a>
           <a class="nav-link" href="assignments.html"><span class="nav-icon">✓</span>Assignments</a>
         </nav>
@@ -29,13 +30,68 @@
         <p class="sidebar-note">Your attendance, in one calm place.</p>
       </aside>
       <section class="content" id="top">
-        <header class="topbar"><div><div class="brand-wordmark">BunkBalance</div><h1 id="greeting">Yo — time to lock in.</h1></div><div class="topbar-actions"><nav class="page-nav" aria-label="Main navigation"><a class="nav-link active" href="attendance.html">Attendance</a><a class="nav-link" href="assignments.html">Assignments</a></nav><div class="profile-menu"><button class="avatar" id="profile-menu-button" type="button" aria-label="Open profile menu" aria-expanded="false" aria-controls="profile-menu">M</button><div class="profile-menu-panel" id="profile-menu" role="menu" hidden><button class="profile-menu-item" id="theme-toggle" type="button" role="menuitem" aria-pressed="false">Turn on dark mode</button><button class="profile-menu-item" id="logout-button" type="button" role="menuitem">Log out</button></div></div></div></header>
-        <div class="page-heading"><div><span class="eyebrow">Your semester at a glance</span><h2>Keep showing up.</h2></div><button class="quiet-button" id="add-teacher-button" type="button"><span>+</span> Add teacher</button></div>
-        <section class="section-block" id="teachers"><div class="section-heading"><div><span class="eyebrow">Your classes</span><h3>Teachers and subjects</h3></div><span class="section-count" id="teacher-count">0 teachers</span></div><div class="teacher-grid" id="teacher-grid"></div></section>
+        <header class="topbar">
+          <div>
+            <div class="brand-wordmark">BunkBalance</div>
+            <h1 id="greeting">Attendance Overview</h1>
+          </div>
+          <div class="topbar-actions">
+            <div class="profile-menu">
+              <button class="avatar" id="profile-menu-button" type="button" aria-label="Open profile menu" aria-expanded="false" aria-controls="profile-menu">M</button>
+              <div class="profile-menu-panel" id="profile-menu" role="menu" hidden>
+                <button class="profile-menu-item" id="theme-toggle" type="button" role="menuitem" aria-pressed="false">Turn on dark mode</button>
+                <button class="profile-menu-item" id="logout-button" type="button" role="menuitem">Log out</button>
+              </div>
+            </div>
+          </div>
+        </header>
+        <div class="page-heading">
+          <div>
+            <span class="eyebrow">Your semester at a glance</span>
+            <h2>Keep showing up.</h2>
+          </div>
+          <button class="quiet-button" id="add-teacher-button" type="button"><span>+</span> Add teacher</button>
+        </div>
+        <section class="section-block" id="teachers">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">Your classes</span>
+              <h3>Teachers and subjects</h3>
+            </div>
+            <span class="section-count" id="teacher-count">0 teachers</span>
+          </div>
+          <div class="teacher-grid" id="teacher-grid"></div>
+        </section>
       </section>
     </main>
-    <div class="modal-backdrop" id="teacher-modal" hidden><form class="modal" id="teacher-form"><button class="modal-close" type="button" data-close-modal aria-label="Close">×</button><span class="eyebrow">New teacher</span><h2>Add a teacher</h2><label>Name<input name="name" required placeholder="e.g. Dr. Jane Smith" /></label><label>Subject<input name="subject" required placeholder="e.g. Fundamentals of Accounting" /></label><label>Total classes this semester<input name="semester_classes" type="number" min="1" max="200" required placeholder="42" /></label><label>Room or note<input name="room" placeholder="e.g. 1st Floor · Class LR-113" /></label><button class="primary-button" type="submit">Add teacher</button></form></div>
-    <div class="modal-backdrop" id="teacher-detail-modal" hidden><section class="modal teacher-detail"><button class="modal-close" type="button" data-close-modal aria-label="Close">×</button><span class="eyebrow">Teacher details</span><h2 id="detail-name"></h2><p class="detail-subject" id="detail-subject"></p><p class="teacher-room" id="detail-room"></p><div class="detail-attendance"><span class="eyebrow">Mark today’s class</span><div><button class="attendance-button present" id="detail-present" type="button">✓ Present</button><button class="attendance-button absent" id="detail-absent" type="button">× Absent</button></div></div></section></div>
+    <div class="modal-backdrop" id="teacher-modal" hidden>
+      <form class="modal" id="teacher-form">
+        <button class="modal-close" type="button" data-close-modal aria-label="Close">×</button>
+        <span class="eyebrow">New teacher</span>
+        <h2>Add a teacher</h2>
+        <label>Name<input name="name" required placeholder="e.g. Dr. Jane Smith" /></label>
+        <label>Subject<input name="subject" required placeholder="e.g. Fundamentals of Accounting" /></label>
+        <label>Total classes this semester<input name="semester_classes" type="number" min="1" max="200" required placeholder="42" /></label>
+        <label>Room or note<input name="room" placeholder="e.g. 1st Floor · Class LR-113" /></label>
+        <button class="primary-button" type="submit">Add teacher</button>
+      </form>
+    </div>
+    <div class="modal-backdrop" id="teacher-detail-modal" hidden>
+      <section class="modal teacher-detail">
+        <button class="modal-close" type="button" data-close-modal aria-label="Close">×</button>
+        <span class="eyebrow">Teacher details</span>
+        <h2 id="detail-name"></h2>
+        <p class="detail-subject" id="detail-subject"></p>
+        <p class="teacher-room" id="detail-room"></p>
+        <div class="detail-attendance">
+          <span class="eyebrow">Mark today’s class</span>
+          <div>
+            <button class="attendance-button present" id="detail-present" type="button">✓ Present</button>
+            <button class="attendance-button absent" id="detail-absent" type="button">× Absent</button>
+          </div>
+        </div>
+      </section>
+    </div>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
   </body>
 </html>

@@ -124,6 +124,39 @@ button { cursor: pointer; }
 .remove-teacher:hover { color: var(--red); text-decoration: underline; }
 .text-button { border: 0; background: transparent; color: var(--blue); font: 700 12px Arial, sans-serif; }
 
+/* Quotes and Home page */
+.home-page { max-width: 960px; }
+.home-hero { margin: 20px 0 35px; }
+.home-brand-block { display: flex; align-items: baseline; gap: 14px; margin-bottom: 8px; }
+.home-brand-block .brand-wordmark { margin: 0; font-size: clamp(38px, 5.5vw, 64px); }
+.home-subtitle { color: var(--muted); font-size: 15px; margin: 0; }
+.home-greeting-bar { margin: 30px 0 35px; padding: 22px 26px; border: 1px solid var(--line); border-radius: 9px; background: var(--paper); display: flex; align-items: center; justify-content: space-between; gap: 20px; box-shadow: 0 4px 18px rgba(39, 49, 66, .04); }
+.home-greeting-bar h2 { margin: 0; font-size: clamp(22px, 3.2vw, 32px); font-weight: 400; letter-spacing: -.6px; }
+.home-greeting-bar .eyebrow { margin-bottom: 4px; }
+
+.quote-card { position: relative; padding: 28px 30px; border-radius: 9px; border: 1px solid var(--line); background: #fbfcfe; margin-bottom: 35px; box-shadow: 0 4px 18px rgba(39, 49, 66, .04); }
+.quote-mark { font-family: Georgia, serif; font-size: 52px; line-height: .6; color: var(--blue); opacity: .7; display: block; margin-bottom: 8px; }
+.quote-text { margin: 0 40px 14px 0; font-size: clamp(16px, 2.2vw, 20px); font-style: italic; line-height: 1.45; color: var(--ink); }
+.quote-footer { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--line); padding-top: 12px; }
+.quote-label { color: var(--muted); font: 700 11px Arial, sans-serif; letter-spacing: 1px; text-transform: uppercase; }
+.refresh-quote { border: 1px solid var(--line); border-radius: 5px; background: var(--paper); color: var(--ink); padding: 5px 11px; font: 700 12px Arial, sans-serif; display: inline-flex; align-items: center; gap: 5px; transition: background .15s ease, border-color .15s ease; }
+.refresh-quote:hover { background: #eef3f7; border-color: var(--blue); }
+
+.home-shortcuts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 25px; }
+.shortcut-card { display: flex; flex-direction: column; padding: 22px 24px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); text-decoration: none; color: inherit; transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; box-shadow: 0 4px 14px rgba(39, 49, 66, .04); }
+.shortcut-card:hover { transform: translateY(-3px); border-color: var(--blue); box-shadow: 0 10px 24px rgba(39, 49, 66, .1); }
+.shortcut-icon { width: 34px; height: 34px; border-radius: 8px; background: #eef3f7; color: var(--blue); font-size: 18px; display: grid; place-items: center; margin-bottom: 14px; }
+.shortcut-card h3 { margin: 0 0 6px; font-size: 20px; font-weight: 400; color: var(--ink); }
+.shortcut-card p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.45; }
+.shortcut-stat { margin-top: 18px; padding-top: 12px; border-top: 1px solid var(--line); color: var(--blue); font: 700 12px Arial, sans-serif; display: flex; justify-content: space-between; }
+
+.dark-mode .quote-card { background: #3b4252; border-color: var(--line); }
+.dark-mode .home-greeting-bar { background: var(--paper); border-color: var(--line); }
+.dark-mode .shortcut-card { background: var(--paper); border-color: var(--line); }
+.dark-mode .shortcut-icon { background: #434c5e; color: var(--frost); }
+.dark-mode .refresh-quote { background: #434c5e; color: var(--ink); border-color: var(--line); }
+.dark-mode .refresh-quote:hover { background: #4c566a; }
+
 .task-list { display: grid; gap: 1px; border-top: 1px solid var(--line); }
 .task-row { display: grid; grid-template-columns: 28px 1fr auto auto; align-items: center; gap: 12px; padding: 16px 4px; border-bottom: 1px solid var(--line); }
 .task-check { width: 18px; height: 18px; accent-color: var(--blue); }
@@ -181,6 +214,8 @@ button { cursor: pointer; }
   .section-heading { align-items: flex-start; flex-direction: column; gap: 10px; }
   .section-actions { width: 100%; justify-content: space-between; }
   .assignment-summary { width: 100%; }
+  .home-shortcuts { grid-template-columns: 1fr; }
+  .home-greeting-bar { flex-direction: column; align-items: flex-start; gap: 12px; }
 }
 
 @media (max-width: 430px) {
